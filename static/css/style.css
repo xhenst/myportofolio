@@ -189,4 +189,55 @@ h1, .brand {
     .social-links {
         justify-content: flex-start;
     }
+    .education-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.education {
+    padding: 4rem 0 5rem;
+}
+
+.education h2 {
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.education-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.education-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    background-color: var(--paper);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.education-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(28, 25, 23, 0.1);
+}
+
+.education-year {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-dark);
+    margin-bottom: 1.5rem;
+}
+
+.education-card h3 {
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+    margin-bottom: 0.5rem;
+}
+
+.education-card p {
+    color: var(--text-muted);
+    margin: 0.2rem 0;
 }
