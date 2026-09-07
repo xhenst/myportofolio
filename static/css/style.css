@@ -173,28 +173,6 @@ h1, .brand {
     border-top: 1px solid var(--line);
 }
 
-@media (max-width: 600px) {
-    .hero-grid {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "identity"
-            "photo"
-            "details";
-    }
-
-    .hero-photo {
-        max-width: 220px;
-    }
-
-    .social-links {
-        justify-content: flex-start;
-    }
-    .education-list {
-        grid-template-columns: 1fr;
-    }
-}
-
-
 .education {
     padding: 4rem 0 5rem;
 }
@@ -241,3 +219,26 @@ h1, .brand {
     color: var(--text-muted);
     margin: 0.2rem 0;
 }
+
+@media (max-width: 600px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "identity"
+            "photo"
+            "details";
+    }
+
+    .hero-photo {
+        max-width: 220px;
+    }
+
+    .social-links {
+        justify-content: flex-start;
+    }
+    .education-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+
