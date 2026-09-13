@@ -211,6 +211,7 @@ h1, .brand {
 }
 
 .education-card h3 {
+    background-color: #fff;
     font-family: "Space Grotesk", -apple-system, sans-serif;
     margin-bottom: 0.5rem;
 }
