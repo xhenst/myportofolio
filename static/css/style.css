@@ -190,10 +190,10 @@ h1, .brand {
 }
 
 .education-card {
+    background-color: #fff;
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 1.5rem;
-    background-color: var(--paper);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -211,15 +211,10 @@ h1, .brand {
 }
 
 .education-card h3 {
-    background-color: #fff;
     font-family: "Space Grotesk", -apple-system, sans-serif;
     margin-bottom: 0.5rem;
 }
 
-.education-card p {
-    color: var(--text-muted);
-    margin: 0.2rem 0;
-}
 
 .experience-section {
     padding: 4rem 0;
