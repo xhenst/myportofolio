@@ -1,5 +1,7 @@
 import uuid
 from django.db import models
+from django.forms import ModelForm, TextInput, Textarea,  URLInput
+
 
 class Experience(models.Model):
     EXPERIENCE_CHOICES = [
@@ -24,6 +26,7 @@ class Experience(models.Model):
     @property
     def is_ongoing(self):
         return self.ended_at is None
+
 class Education(models.Model):
     school = models.CharField(max_length=255)
     degree = models.CharField(max_length=255)
