@@ -30,6 +30,8 @@ h1, .brand {
     margin: 0 auto;
     padding: 0 1.5rem;
 }
+
+/* --- HEADER --- */
 .site-header {
     border-bottom: 1px solid var(--line);
 }
@@ -58,6 +60,8 @@ h1, .brand {
     text-decoration: none;
     font-size: 0.95rem;
 }
+
+/* --- HERO SECTION --- */
 .hero {
     padding: 4.5rem 0 5rem;
 }
@@ -71,13 +75,9 @@ h1, .brand {
     gap: 1.5rem 3rem;
 }
 
-.hero-identity {
-    grid-area: identity;
-}
-
-.hero-details {
-    grid-area: details;
-}
+.hero-identity { grid-area: identity; }
+.hero-details { grid-area: details; }
+.hero-photo { grid-area: photo; align-self: center; position: relative; }
 
 .hero-kicker {
     font-size: 0.85rem;
@@ -113,9 +113,7 @@ h1, .brand {
     margin-bottom: 0.15rem;
 }
 
-.meta-row dd {
-    font-weight: 600;
-}
+.meta-row dd { font-weight: 600; }
 
 .social-links {
     display: flex;
@@ -139,12 +137,6 @@ h1, .brand {
     background-color: var(--accent);
 }
 
-.hero-photo {
-    grid-area: photo;
-    align-self: center;
-    position: relative;
-}
-
 .photo-block {
     position: absolute;
     top: 1.25rem;
@@ -166,6 +158,189 @@ h1, .brand {
     border-radius: var(--radius);
     border: 3px solid var(--ink);
 }
+
+/* --- TOMBOL GLOBAL --- */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-dark);
+    color: var(--paper);
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.button:hover { opacity: 0.9; }
+.button-secondary { background: var(--text-muted); }
+.button-danger { background: #b42318; }
+
+/* --- EDUCATION SECTION --- */
+.education-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Judul di kiri, tombol di kanan */
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.education-header h1 {
+    margin-bottom: 0;
+    font-size: 2.5rem;
+    color: var(--ink);
+}
+
+.education-add-button {
+    gap: 0.45rem;
+}
+
+.education-add-button span {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+/* --- SEARCH BAR MEMBENTANG --- */
+.education-search {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+    width: 100%;
+}
+
+.education-search__input {
+    flex: 1; /* Ini kuncinya biar input search meregang maksimal */
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #ffffff;
+    color: var(--ink);
+    font: inherit;
+    outline: none;
+}
+
+.education-search__input:focus {
+    border-color: var(--accent-dark);
+}
+
+/* --- KARTU (CARD) DESIGN --- */
+.education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsif otomatis */
+    gap: 1.5rem;
+}
+
+.experience-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--accent-dark); /* Pengganti foto (garis tebal di atas) */
+    border-radius: var(--radius);
+    padding: 1.5rem;
+}
+
+.experience-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+    color: var(--ink);
+}
+
+.experience-category {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.experience-description {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex-grow: 1; 
+}
+
+.education-card-actions {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+}
+
+.education-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 0.5rem;
+}
+
+.education-actions .button {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+}
+
+/* --- MODAL HAPUS --- */
+.hide { display: none !important; }
+
+.education-delete-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 1rem;
+    border: 0;
+    background: transparent;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+}
+
+.education-delete-modal:popover-open { display: flex; }
+
+.education-delete-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: rgba(28, 25, 23, 0.58);
+}
+
+.education-delete-modal__content {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 480px);
+    padding: 1.5rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 1rem 3rem rgba(28, 25, 23, 0.22);
+}
+
+.education-delete-modal__content h2 {
+    margin: 0 0 0.75rem;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.5rem;
+}
+
+.education-delete-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* --- FOOTER --- */
 .site-footer {
     padding: 1.5rem;
     color: var(--text-muted);
@@ -173,6 +348,7 @@ h1, .brand {
     border-top: 1px solid var(--line);
 }
 
+/* --- RESPONSIVE MOBILE --- */
 @media (max-width: 600px) {
     .hero-grid {
         grid-template-columns: 1fr;
@@ -182,11 +358,33 @@ h1, .brand {
             "details";
     }
 
-    .hero-photo {
-        max-width: 220px;
+    .hero-photo { max-width: 220px; }
+    .social-links { justify-content: flex-start; }
+
+    .education-header {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
-    .social-links {
-        justify-content: flex-start;
+    .education-add-button {
+        width: 100%;
+        justify-content: center;
     }
+
+    .education-search { flex-direction: column; }
+    .education-search .button { width: 100%; }
+
+    .education-delete-modal {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .education-delete-modal__content {
+        width: 100%;
+        padding: 1.25rem;
+        border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .education-delete-modal__actions { flex-direction: column-reverse; }
+    .education-delete-modal__actions .button { width: 100%; text-align: center; }
 }
