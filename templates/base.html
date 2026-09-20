@@ -16,10 +16,10 @@
         <div class="container header-inner">
             <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
             <nav class="nav-links">
-                <!-- Tambahkan logika class "active" via Django jika diperlukan, sementara menggunakan nav-btn -->
                 <a href="{% url 'main:show_main' %}" class="nav-btn">Profile</a>
                 <a href="{% url 'main:show_experience' %}" class="nav-btn">Experience</a>
                 <a href="{% url 'main:show_education' %}" class="nav-btn">Education</a>
+                <a href="{% url 'main:show_projects' %}" class="nav-btn">Projects</a>
             </nav>
         </div>
     </header>
