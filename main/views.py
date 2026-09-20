@@ -38,7 +38,7 @@ def show_education(request):
     title_query = request.GET.get("title", "").strip()
 
     context = {
-        "name": "Burhan",
+        "name": "Kayla Alifah Khairunisa",
         "education_list": education,
         "title_query": title_query,
     }
@@ -50,6 +50,8 @@ def create_education(request):
         form.save()
         messages.success(request, "Pendidikan baru berhasil ditambahkan!")
         return redirect("main:show_education")
+    else:
+            print("ERROR FORM:", form.errors)
 
     context = {
         "name": "Kayla Alifah Khairunisa",

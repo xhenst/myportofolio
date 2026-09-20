@@ -24,26 +24,8 @@ class EducationForm(ModelForm):
         }
 
         widgets = {
-            "school": TextInput(
-                attrs={
-                    "placeholder": "Universitas Indonesia",
-                    "maxlength": 255,
-                }
-            ),
-            "degree": TextInput(
-                attrs={
-                    "placeholder": "S1 Teknik Informatika",
-                    "maxlength": 255,
-                }
-            ),
-            "started_at": NumberInput(
-                attrs={
-                    "placeholder": "2022",
-                }
-            ),
-            "ended_at": NumberInput(
-                attrs={
-                    "placeholder": "2026",
-                }
-            ),
+            "school": TextInput(),
+            "degree": TextInput(),
+            "started_at": TextInput(),
+            "ended_at": TextInput(),
         }

@@ -1,35 +1,37 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+    <title>Profile - {{ name }}</title>
+{% endblock meta %}
+
 {% block content %}
- <main>
-        <section class="hero" id="profile">
-            <div class="container hero-grid">
-                <div class="hero-identity">
-                    <p class="hero-kicker">Information System &middot; Universitas Indonesia</p>
-                    <h1>Kayla Alifah Khairunisa</h1>
-                </div>
-                <div class="hero-photo">
-                    <div class="photo-block"></div>
-                    <img class="avatar" src="/static/img/foto-kayla.png" alt="Photo of {{ name }}">
-                </div>
-                <div class="hero-details">
-                    <p class="bio">{{ bio }}</p>
-                    <dl class="meta-list">
-                        <div class="meta-row">
-                            <dt>NPM</dt>
-                            <dd>{{ npm }}</dd>
-                        </div>
-                        <div class="meta-row">
-                            <dt>Program</dt>
-                            <dd>{{ study_program }}</dd>
-                        </div>
-                    </dl>
-                    <div class="social-links">
-                        <a href="https://github.com/xhenst" class="social-link">GitHub</a>
-                        <a href="https://www.linkedin.com/in/kaylalifahk/" class="social-link">LinkedIn</a>
-                        <a href="kaylalifahk@gmail.com" class="social-link">Email</a>
-                    </div>
-                </div>
+<section class="tab-content active" id="profile">
+    <div class="profile-layout">
+        <div class="profile-text" style="margin-top: 3rem;">
+            <p style="color: var(--accent); font-weight: bold; margin-bottom: 1rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.08em;">
+                {{ study_program }} &middot; Universitas Indonesia
+            </p>
+            <h1 style="line-height: 1.2; color: #FFFFFF;">
+             Hello, I'm <br>
+             <span style="color: var(--accent);">{{ name }}</span>
+            </h1>
+            <h3 style="margin-top: 1.5rem; color: #FFFFFF; line-height: 1.8;">NPM: {{ npm }}</h3>
+            <p style="margin-top: 1.5rem; color: #CCCCCC; line-height: 1.8;">
+            {{ bio }}
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/xhenst" class="social-link">GitHub</a>
+                <a href="https://www.linkedin.com/in/kaylalifahk/" class="social-link">LinkedIn</a>
+                <a href="mailto:kaylalifahk@gmail.com" class="social-link">Email</a>
             </div>
-        </section>
-    </main>
+        </div>
+        
+        <div class="photo-wrapper" style="margin-top: 3rem;">
+            <div class="photo-backdrop"></div>
+            <div class="photo-frame">
+                <img src="{% static 'img/foto-kayla.png' %}" alt="Photo of {{ name }}">
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock content %}

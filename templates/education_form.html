@@ -1,42 +1,76 @@
 {% extends "base.html" %}
 {% block meta %}
     <title>Add Education - {{ name }}</title>
+    
+    <!-- CSS Khusus untuk menimpa gaya bawaan input Django -->
+    <style>
+        .custom-form input, 
+        .custom-form textarea, 
+        .custom-form select {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            background-color: transparent;
+            border: 1px solid var(--accent-dark);
+            border-radius: 12px;
+            color: #FFFFFF;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .custom-form input:focus, 
+        .custom-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background-color: rgba(255, 255, 255, 0.02);
+            box-shadow: 0 0 0 2px rgba(180, 122, 154, 0.2);
+        }
+        
+        .custom-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+    </style>
 {% endblock meta %}
+
 {% block content %}
-    <main>
-        <section class="experience-section">
-            <div class="container">
-                <h1>Add New Education</h1>
+<section class="tab-content active" style="margin-top: 4rem;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 2rem; color: #FFFFFF;">Add New Education</h1>
+    
+    <!-- Card Form -->
+    <div class="card" style="max-width: 650px; background: transparent; border: 1px solid var(--line); border-radius: 16px; padding: 2.5rem;">
+        
+        <form method="post" action="{% url 'main:create_education' %}" class="custom-form">
+            {% csrf_token %}
 
-                <form method="post"
-                      action="{% url 'main:create_education' %}"
-                      class="education-form">
-                    {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="{{ field.id_for_label }}" style="display: block; margin-bottom: 0.6rem; font-weight: 500; color: var(--accent); font-size: 0.95rem;">
+                        {{ field.label }}
+                    </label>
 
-                    {% for field in form %}
-                        <div class="form-group">
-                            <label for="{{ field.id_for_label }}">
-                                {{ field.label }}
-                            </label>
+                    <!-- Render Input Django -->
+                    {{ field }}
 
-                            {{ field }}
-
-                            {% for error in field.errors %}
-                                <p class="form-error">{{ error }}</p>
-                            {% endfor %}
-                        </div>
+                    {% for error in field.errors %}
+                        <p style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.4rem;">{{ error }}</p>
                     {% endfor %}
+                </div>
+            {% endfor %}
 
-                    <button type="submit" class="button">
-                        Tambah Education
-                    </button>
-
-                    <a href="{% url 'main:show_education' %}"
-                       class="button button-secondary">
-                        Batal
-                    </a>
-                </form>
+            <!-- Area Tombol -->
+            <div style="display: flex; gap: 1rem; margin-top: 3rem;">
+                <button type="submit" class="button" style="background-color: var(--accent); color: var(--surface); border: none; font-weight: 600; padding: 0.8rem 1.8rem; border-radius: 50px; cursor: pointer;">
+                    Tambah Education
+                </button>
+                
+                <a href="{% url 'main:show_education' %}" class="button" style="background: transparent; border: 1px solid var(--line); color: var(--ink); text-decoration: none; padding: 0.8rem 1.8rem; border-radius: 50px;">
+                    Batal
+                </a>
             </div>
-        </section>
-    </main>
+        </form>
+        
+    </div>
+</section>
 {% endblock content %}
