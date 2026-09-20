@@ -1,4 +1,4 @@
-from main.forms import EducationForm
+from main.forms import EducationForm, ProjectForm
 from django.contrib import messages
 from django.core import serializers
 from django.http import HttpResponse
@@ -76,3 +76,16 @@ def delete_education(request, education_id):
         return redirect("main:show_education")
 
     return redirect("main:show_education")
+def create_project(request):
+    form = ProjectForm(request.POST or None)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Proyek baru berhasil ditambahkan!")
+        return redirect("main:show_projects")
+
+    context = {
+        "name": "Kayla Alifah Khairunisa",
+        "form": form,
+    }
+    return render(request, "projects_form.html", context)
