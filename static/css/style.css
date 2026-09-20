@@ -585,6 +585,33 @@ main {
         text-align: center;
     }
 }
+.custom-form input, 
+.custom-form textarea, 
+.custom-form select {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    background-color: transparent;
+    border: 1px solid var(--accent-dark);
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.custom-form input:focus, 
+.custom-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background-color: rgba(255, 255, 255, 0.02);
+    box-shadow: 0 0 0 2px rgba(180, 122, 154, 0.2);
+}
+
+.custom-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
 @media (max-width: 768px) {
     .profile-layout {
         grid-template-columns: 1fr;

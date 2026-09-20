@@ -49,21 +49,19 @@
                         <span style="background: rgba(180, 122, 154, 0.1); color: var(--accent); padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(180, 122, 154, 0.2);">
                             {{ project.tech_stack }}
                         </span>
-                       
-
                     </div>
                     <p style="color: #CCCCCC; line-height: 1.6; font-size: 0.95rem; margin-top: 0.5rem;">{{ project.description }}</p>
                 </div>
                 
-                <!-- Area Tombol Aksi di Bawah Card -->
-                <div style="display: flex; gap: 1rem; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.2rem; margin-top: auto;">
+                <!-- Area Tombol Aksi di Bawah Card (Hanya 1 set yang bersih) -->
+                <div style="display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.2rem; margin-top: auto;">
                     {% if project.project_url %}
                         <a href="{{ project.project_url }}" target="_blank" class="button" style="font-size: 0.85rem; padding: 0.5rem 1.2rem; background: transparent; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 8px;">Lihat Proyek</a>
                     {% endif %}
-                    
-                    <a href="{% url 'main:delete_project' project.id %}" class="button" style="font-size: 0.85rem; padding: 0.5rem 1.2rem; background: transparent; border: 1px solid #ff6b6b; color: #ff6b6b; text-decoration: none; border-radius: 8px;" onclick="return confirm('Apakah kamu yakin ingin menghapus proyek ini?');">
-                        Hapus
-                    </a>
+                    {% include "components/project_edit_button.html" with project=project %}
+                    {% include "components/project_edit_modal.html" with project=project %}
+                    {% include "components/project_delete_modal.html" with project=project %}
+
                 </div>
             </div>
         {% empty %}
