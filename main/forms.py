@@ -1,7 +1,6 @@
-from django.forms import ModelForm, TextInput, Textarea, NumberInput
+from django.forms import ModelForm, TextInput, Textarea
 
 from main.models import Education
-
 
 class EducationForm(ModelForm):
     class Meta:
