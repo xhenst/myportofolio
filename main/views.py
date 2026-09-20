@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from main.models import Experience, Education
+from main.models import Experience, Education,Project
 
 
 def show_main(request):
@@ -89,3 +89,9 @@ def create_project(request):
         "form": form,
     }
     return render(request, "projects_form.html", context)
+def show_projects(request):
+    context = {
+        "name": "Kayla Alifah Khairunisa",
+        "project_list": Project.objects.all(),
+    }
+    return render(request, "project.html", context)

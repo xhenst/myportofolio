@@ -274,6 +274,69 @@ main {
     color: var(--surface);
     transform: translateY(-2px);
 }
+.project-form {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    color: var(--accent);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem 1.2rem;
+    background-color: transparent;
+    border: 1px solid var(--accent-dark);
+    border-radius: 12px;
+    color: var(--ink);
+    font: inherit;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(180, 122, 154, 0.2);
+}
+
+.form-error {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-top: 0.35rem;
+}
+
+.button {
+    display: inline-block;
+    height: fit-content;
+    border: 0;
+    border-radius: 50px;
+    padding: 0.8rem 1.8rem;
+    background: var(--accent);
+    color: var(--surface);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.button-secondary {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+}
 /* Responsif untuk layar HP */
 @media (max-width: 768px) {
     .profile-layout {
