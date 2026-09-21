@@ -4,38 +4,39 @@ NPM : 2506611931
 
 Kelas : PBP E
 
+
+
 ### Tugas 1
 
 1. **Penggunaan Elemen Semantik HTML5**
-   * Iya, saya menggunakan elemen semantik HTML5 seperti `<section>` pada website portofolio saya. Saya menggunakan `<section>` untuk memisahkan bagian Profile dan Education agar struktur halaman lebih terorganisir. Penggunaan elemen tersebut membantu saya mengelompokkan konten berdasarkan fungsinya, sehingga lebih mudah dibaca dan dikelola meskipun website yang dibuat masih berupa *static web*.
+   * Iya, saya menggunakan elemen semantik HTML5 seperti `<section>` pada website portofolio saya. Saya menggunakan `<section>` untuk memisahkan bagian Profile dan Education agar struktur halaman lebih terorganisir. Penggunaan elemen tersebut membantu saya mengelompokkan konten berdasarkan fungsinya, sehingga lebih mudah dibaca dan dikelola meskipun website yang dibuat masih berupa *static web*.
 
 2. **Tantangan Desain Responsif**
-   * Tantangan yang saya temukan adalah menjaga *layout* tetap rapi saat berpindah dari desktop ke *mobile*. Saya menggunakan *Grid* untuk menampilkan tiga *card Education* secara horizontal di desktop, lalu mengubahnya menjadi satu *card* per baris di *mobile*. Saya mengeceknya melalui *responsive mode* pada *browser* agar tampilannya tetap nyaman dan tidak perlu *scroll* ke samping.
+   * Tantangan yang saya temukan adalah menjaga *layout* tetap rapi saat berpindah dari desktop ke *mobile*. Saya menggunakan *Grid* untuk menampilkan tiga *card Education* secara horizontal di desktop, lalu mengubahnya menjadi satu *card* per baris di *mobile*. Saya mengeceknya melalui *responsive mode* pada *browser* agar tampilannya tetap nyaman dan tidak perlu *scroll* ke samping.
 
 3. **Keterbatasan Web Statis dan Rencana Pengembangan**
-   * Karena website saya masih berupa *static web*, informasi yang ditampilkan masih harus diperbarui secara manual melalui kode HTML. Hal ini membuat website kurang fleksibel ketika saya ingin menambahkan atau memperbarui informasi. Pada iterasi berikutnya, saya ingin menambahkan fitur navigasi yang lebih interaktif, sehingga pengunjung dapat berpindah antarbagian website dengan lebih mudah.
+   * Karena website saya masih berupa *static web*, informasi yang ditampilkan masih harus diperbarui secara manual melalui kode HTML. Hal ini membuat website kurang fleksibel ketika saya ingin menambahkan atau memperbarui informasi. Pada iterasi berikutnya, saya ingin menambahkan fitur navigasi yang lebih interaktif, sehingga pengunjung dapat berpindah antarbagian website dengan lebih mudah.
 
 
 ### Tugas 2
 
 1. **Alur Request dan Siklus Django**
-   * Alur yang terjadi ketika pengguna membuka halaman portofolio baru adalah:  
-     `Browser` → `urls.py proyek` → `urls.py aplikasi` → `view` → `model` → `template` → `Browser`
-   * Penjelasan masing-masing komponen:
-     * **`urls.py` proyek** menerima URL *request* dari pengguna dan menentukan aplikasi mana yang menangani URL tersebut.
-     * **`urls.py` aplikasi** mencocokkan URL dengan pola URL yang tersedia dan mengarahkannya ke fungsi atau *class view* yang sesuai.
-     * **`view`** menangani *request* tersebut. Jika halaman membutuhkan data portofolio, *view* mengambil data dari *model* melalui database.
-     * **`model`** merepresentasikan struktur dan data yang disimpan di database, misalnya nama proyek, deskripsi, tahun, dan teknologi yang digunakan.
-     * **`template`** menerima *context* data dari *view* dan menggunakan data tersebut untuk membentuk tampilan HTML yang dikembalikan ke *browser*.
+   * Alur yang terjadi ketika pengguna membuka halaman portofolio baru adalah:  
+     `Browser` → `urls.py proyek` → `urls.py aplikasi` → `view` → `model` → `template` → `Browser`
+   * Penjelasan masing-masing komponen:
+     * **`urls.py` proyek** menerima URL *request* dari pengguna dan menentukan aplikasi mana yang menangani URL tersebut.
+     * **`urls.py` aplikasi** mencocokkan URL dengan pola URL yang tersedia dan mengarahkannya ke fungsi atau *class view* yang sesuai.
+     * **`view`** menangani *request* tersebut. Jika halaman membutuhkan data portofolio, *view* mengambil data dari *model* melalui database.
+     * **`model`** merepresentasikan struktur dan data yang disimpan di database, misalnya nama proyek, deskripsi, tahun, dan teknologi yang digunakan.
+     * **`template`** menerima *context* data dari *view* dan menggunakan data tersebut untuk membentuk tampilan HTML yang dikembalikan ke *browser*.
 
 2. **Alasan Penyimpanan Data pada Model**
-   * Data sebaiknya disimpan pada *model* karena *model* terhubung dengan database, sehingga data dapat diubah, ditambah, atau dihapus secara dinamis tanpa harus mengubah kode pada *template*. Hal ini membuat aplikasi lebih mudah dipelihara dan dikembangkan (*maintainability*).
+   * Data sebaiknya disimpan pada *model* karena *model* terhubung dengan database, sehingga data dapat diubah, ditambah, atau dihapus secara dinamis tanpa harus mengubah kode pada *template*. Hal ini membuat aplikasi lebih mudah dipelihara dan dikembangkan (*maintainability*).
 
 3. **Perbedaan `makemigrations` dan `migrate`**
-   * **`makemigrations`**: Berfungsi untuk membuat file migrasi baru berdasarkan perubahan struktur yang baru saja Anda lakukan pada *model*.
-   * **`migrate`**: Berfungsi untuk menerapkan perubahan atau file migrasi tersebut secara nyata ke dalam database.
-   * **Contoh Kasus**: Perubahan model yang mengharuskan menjalankan kedua perintah ini adalah ketika Anda menambahkan *field* baru (misalnya kolom `is_active` atau tanggal pembuatan) pada suatu *model*.
-
+   * **`makemigrations`**: Berfungsi untuk membuat file migrasi baru berdasarkan perubahan struktur yang baru saja Anda lakukan pada *model*.
+   * **`migrate`**: Berfungsi untuk menerapkan perubahan atau file migrasi tersebut secara nyata ke dalam database.
+   * **Contoh Kasus**: Perubahan model yang mengharuskan menjalankan kedua perintah ini adalah ketika Anda menambahkan *field* baru (misalnya kolom `is_active` atau tanggal pembuatan) pada suatu *model*.
     ### Tugas 3
 
 1. **Penggunaan ModelForm dan CSRF Token pada Django**
@@ -54,8 +55,7 @@ Kelas : PBP E
      4. Data dari model yang masih berupa *QuerySet* atau objek Python kompleks di-*serialize* ke dalam bentuk tipe data primitif (seperti *list* berisi *dictionary*).
      5. Data yang sudah di-konversi dikembalikan ke klien menggunakan `JsonResponse` (atau `HttpResponse` dengan *content-type* `application/json`).
    * **Mengapa perlu *Serialization*:** Objek model Django adalah struktur data kompleks di dalam memori Python yang tidak bisa langsung dibaca atau diubah menjadi format teks JSON standar. Proses *serialization* diperlukan untuk menjembatani objek tersebut menjadi tipe data dasar yang kompatibel dengan format JSON agar dapat ditransmisikan secara mulus melalui protokol HTTP.
-
-   ### Penggunaan AI Tugas 3
+### Penggunaan AI Tugas 3
 
 Dalam tugas ini, saya menggunakan Gemini untuk membantu membuat fungsi CRUD pada *section* **Project** dan **Experience** berdasarkan modul *Education* yang sudah jadi sebelumnya, serta membantu merapikan gaya CSS.
 
