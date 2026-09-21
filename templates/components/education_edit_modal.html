@@ -1,0 +1,52 @@
+<div id="edit-education-{{ education.id }}" 
+     class="project-delete-modal" 
+     popover="auto" 
+     role="dialog" 
+     aria-modal="true">
+    
+    <button type="button" 
+            class="project-delete-modal__backdrop" 
+            popovertarget="edit-education-{{ education.id }}" 
+            popovertargetaction="hide" 
+            aria-label="Tutup form edit"></button>
+    
+    <div class="project-delete-modal__content modal-content-custom">
+        <button type="button" class="project-delete-modal__close" popovertarget="edit-education-{{ education.id }}" popovertargetaction="hide">×</button>
+        
+        <h2 class="education-modal-heading">Edit Pendidikan</h2>
+        
+        <form method="post" action="{% url 'main:edit_education' education.id %}">
+            {% csrf_token %}
+            
+            <div class="education-field-group">
+                <label class="education-field-label">Nama Institusi / Sekolah</label>
+                <input type="text" name="school" value="{{ education.school }}" class="project-search__input" required>
+            </div>
+            
+            <div class="education-field-group">
+                <label class="education-field-label">Gelar / Jurusan</label>
+                <input type="text" name="degree" value="{{ education.degree }}" class="project-search__input" required>
+            </div>
+
+            <div class="education-field-group">
+                <label class="education-field-label">Deskripsi</label>
+                <textarea name="description" class="project-search__input modal-textarea-custom" required>{{ education.description }}</textarea>
+            </div>
+
+            <div class="education-field-group">
+                <label class="education-field-label">Tahun Mulai</label>
+                <input type="number" name="started_at" value="{{ education.started_at }}" class="project-search__input" required>
+            </div>
+            
+            <div class="education-field-group">
+                <label class="education-field-label">Tahun Selesai</label>
+                <input type="text" name="ended_at" value="{{ education.ended_at }}" class="project-search__input" required>
+            </div>
+        
+            <div class="project-delete-modal__actions education-modal-actions">
+                <button type="button" class="button button-secondary" popovertarget="edit-education-{{ education.id }}" popovertargetaction="hide">Batal</button>
+                <button type="submit" class="button btn-education-save">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>

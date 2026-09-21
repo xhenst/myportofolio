@@ -1,61 +1,43 @@
-<div style="margin: 0;">
+<div class="education-delete-wrapper">
     <button type="button"
-            class="button"
-            style="background-color: transparent; color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.5); padding: 0.5rem 1.2rem; font-size: 0.85rem; border-radius: 50px; cursor: pointer; transition: all 0.2s;"
-            onmouseover="this.style.backgroundColor='rgba(255, 107, 107, 0.1)'; this.style.borderColor='#ff6b6b'"
-            onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='rgba(255, 107, 107, 0.5)'"
+            class="button btn-education-delete-trigger"
             popovertarget="delete-education-{{ education.id }}"
             aria-label="Hapus {{ education.title }}"
             title="Hapus">
         Hapus
     </button>
 </div>
-
-<!-- Modal Popover Konfirmasi Hapus -->
 <div id="delete-education-{{ education.id }}"
-     class="education-delete-modal"
-     popover="auto"
-     style="background: transparent; border: none; padding: 0; max-width: 420px; width: 90%; margin: auto;">
-    
-    <!-- Latar Belakang Blur -->
+     class="education-delete-modal education-delete-modal-custom"
+     popover="auto">
     <button type="button"
-            class="education-delete-modal__backdrop"
+            class="education-delete-modal__backdrop education-delete-backdrop-custom"
             popovertarget="delete-education-{{ education.id }}"
             popovertargetaction="hide"
-            style="position: fixed; inset: 0; width: 100vw; height: 100vh; background: rgba(0, 3, 14, 0.85); backdrop-filter: blur(6px); border: none; cursor: default; z-index: -1;"></button>
-    
-    <!-- Kotak Pesan Modal -->
-    <div style="background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 2.5rem 2rem; position: relative; z-index: 1; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.8);">
-        
+            aria-label="Tutup konfirmasi hapus"></button>
+    <div class="education-delete-box">
         <button type="button"
+                class="education-delete-close-btn"
                 popovertarget="delete-education-{{ education.id }}"
                 popovertargetaction="hide"
-                style="position: absolute; top: 1rem; right: 1.5rem; background: transparent; border: none; color: var(--text-muted); font-size: 1.8rem; cursor: pointer; transition: color 0.2s;"
-                onmouseover="this.style.color='#FFFFFF'"
-                onmouseout="this.style.color='var(--text-muted)'">
+                aria-label="Tutup konfirmasi hapus">
             &times;
         </button>
         
-        <h2 style="font-size: 1.5rem; color: #FFFFFF; margin-bottom: 1rem;">Hapus</h2>
-        <p style="color: #CCCCCC; margin-bottom: 2rem; line-height: 1.6;">
+        <h2 class="education-delete-title">Hapus</h2>
+        <p class="education-delete-desc">
             Apakah Anda yakin ingin menghapus <br>
-            <strong style="color: #FFFFFF; font-size: 1.1rem;">{{ education.title }}</strong>?
+            <strong class="education-delete-item-title">{{ education.title }}</strong>?
         </p>
-        
-        <!-- Tombol Aksi di Modal -->
-        <div style="display: flex; gap: 1rem; justify-content: center;">
+        <div class="education-delete-actions">
             <button type="button"
-                    class="button"
-                    style="background: transparent; color: var(--ink); border: 1px solid var(--line); border-radius: 50px; padding: 0.6rem 1.5rem;"
+                    class="button btn-education-cancel"
                     popovertarget="delete-education-{{ education.id }}"
                     popovertargetaction="hide">Batal</button>
-                    
-            <form method="post" action="{% url 'main:delete_education' education.id %}" style="margin: 0;">
+                
+            <form method="post" action="{% url 'main:delete_education' education.id %}" class="form-education-delete-wrapper">
                 {% csrf_token %}
-                <!-- Tombol Hapus Utama -->
-                <button type="submit" class="button" style="background-color: rgba(255, 107, 107, 0.1); color: #ff6b6b; border: 1px solid #ff6b6b; border-radius: 50px; padding: 0.6rem 1.5rem; cursor: pointer;"
-                        onmouseover="this.style.backgroundColor='#ff6b6b'; this.style.color='#FFFFFF'"
-                        onmouseout="this.style.backgroundColor='rgba(255, 107, 107, 0.1)'; this.style.color='#ff6b6b'">
+                <button type="submit" class="button btn-education-confirm-delete">
                     Ya, Hapus
                 </button>
             </form>

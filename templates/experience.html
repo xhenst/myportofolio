@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block meta %}
     <title>Experience - {{ name }}</title>
 {% endblock meta %}
@@ -20,7 +21,7 @@
                 <p class="card-desc">{{ experience.description }}</p>
             </div>
         {% empty %}
-            <p class="empty-state" style="color: var(--text-muted);">Belum ada pengalaman yang ditambahkan.</p>
+            <p class="empty-state experience-empty-text">Belum ada pengalaman yang ditambahkan.</p>
         {% endfor %}
     </div>
 </section>

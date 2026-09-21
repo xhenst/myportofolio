@@ -130,12 +130,11 @@ main {
     max-width: 90%;
 }
 
-/* Area Foto Elegan */
 .photo-wrapper {
     position: relative;
     width: 100%;
     max-width: 360px;
-    aspect-ratio: 3/4; /* Proporsi potret elegan */
+    aspect-ratio: 3/4; 
     margin: 0 auto;
 }
 
@@ -545,7 +544,116 @@ main {
     background: #ff6b6b;
     color: #FFFFFF;
 }
+/* --- Styling Komponen & Modal Delete Education --- */
+.education-delete-wrapper {
+    margin: 0;
+}
 
+.btn-education-delete-trigger {
+    background-color: transparent;
+    color: #ff6b6b;
+    border: 1px solid rgba(255, 107, 107, 0.5);
+    padding: 0.35rem 0.9rem;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-education-delete-trigger:hover {
+    background-color: rgba(255, 107, 107, 0.1);
+    border-color: #ff6b6b;
+}
+
+.education-delete-modal-custom {
+    background: transparent;
+    border: none;
+    padding: 0;
+    max-width: 420px;
+    width: 90%;
+    margin: auto;
+}
+
+.education-delete-backdrop-custom {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 3, 14, 0.85);
+    backdrop-filter: blur(6px);
+    border: none;
+    cursor: default;
+    z-index: -1;
+}
+
+.education-delete-box {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+.education-delete-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.education-delete-close-btn:hover {
+    color: #FFFFFF;
+}
+.education-delete-title {
+    font-size: 1.5rem;
+    color: #FFFFFF;
+    margin-bottom: 1rem;
+}
+.education-delete-desc {
+    color: #CCCCCC;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+.education-delete-item-title {
+    color: #FFFFFF;
+    font-size: 1.1rem;
+}
+.education-delete-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+.btn-education-cancel {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+}
+.form-education-delete-wrapper {
+    margin: 0;
+}
+.btn-education-confirm-delete {
+    background-color: rgba(255, 107, 107, 0.1);
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-education-confirm-delete:hover {
+    background-color: #ff6b6b;
+    color: #FFFFFF;
+}
 @media (max-width: 600px) {
     .project-header {
         align-items: flex-start;
@@ -611,6 +719,545 @@ main {
 .custom-form textarea {
     min-height: 120px;
     resize: vertical;
+}
+/* --- Styling Halaman Projects (Pemisahan dari HTML) --- */
+.projects-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.projects-header-kicker {
+    color: var(--accent);
+    font-weight: bold;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+}
+
+.projects-header-title {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #FFFFFF;
+}
+
+.projects-add-btn {
+    background-color: var(--accent);
+    color: var(--surface);
+    border: none;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(180, 122, 154, 0.2);
+    text-decoration: none;
+}
+
+.projects-search-form {
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    gap: 0.8rem;
+    max-width: 600px;
+}
+
+.projects-search-input {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.projects-search-input:focus {
+    border-color: var(--accent);
+}
+
+.projects-search-btn {
+    background-color: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 50px;
+    padding: 0.8rem 1.8rem;
+    cursor: pointer;
+}
+
+.projects-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card-item {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.project-card-item:hover {
+    border-color: var(--accent-dark);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.project-thumbnail-wrapper {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+}
+
+.project-thumbnail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-info-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.4rem;
+    gap: 0.5rem;
+}
+
+.project-title-heading {
+    font-size: 1.4rem;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.project-tech-badge {
+    background: rgba(180, 122, 154, 0.1);
+    color: var(--accent);
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(180, 122, 154, 0.2);
+}
+
+.project-description-text {
+    color: #CCCCCC;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+}
+
+.project-actions-footer {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1.2rem;
+    margin-top: auto;
+}
+
+.project-link-btn {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.9rem;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.projects-empty-state {
+    color: var(--text-muted);
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 4rem 1rem;
+    border: 1px dashed var(--line);
+    border-radius: 16px;
+}
+/* --- Styling Halaman Profile (Pemisahan dari HTML) --- */
+.profile-text-container {
+    margin-top: 3rem;
+}
+
+.profile-study-kicker {
+    color: var(--accent);
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+}
+
+.profile-greeting-heading {
+    line-height: 1.2;
+    color: #FFFFFF;
+}
+
+.profile-greeting-heading span {
+    color: var(--accent);
+}
+
+.profile-npm-text {
+    margin-top: 1.5rem;
+    color: #FFFFFF;
+    line-height: 1.8;
+}
+
+.profile-bio-text {
+    margin-top: 1.5rem;
+    color: #CCCCCC;
+    line-height: 1.8;
+}
+
+.profile-photo-container {
+    margin-top: 3rem;
+}
+.experience-empty-text {
+    color: var(--text-muted);
+}
+/* --- Styling Halaman Education (Pemisahan dari HTML) --- */
+.education-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1.5rem;
+    margin-bottom: 5rem;
+}
+
+.education-header-title {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #FFFFFF;
+}
+
+.education-add-btn {
+    background-color: var(--accent);
+    color: var(--surface);
+    border: none;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(180, 122, 154, 0.2);
+    text-decoration: none;
+}
+
+.education-search-form {
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    gap: 0.8rem;
+    max-width: 600px;
+}
+
+.education-search-input {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.education-search-input:focus {
+    border-color: var(--accent);
+}
+
+.education-search-btn {
+    background-color: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 50px;
+    padding: 0.8rem 1.8rem;
+    cursor: pointer;
+}
+
+.education-grid-container {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.education-card-item {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.education-card-item:hover {
+    border-color: var(--accent-dark);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.education-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.education-school-title {
+    font-size: 1.5rem;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.education-date-badge {
+    background: rgba(180, 122, 154, 0.1);
+    color: var(--accent);
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(180, 122, 154, 0.2);
+}
+
+.education-degree-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+.education-description-text {
+    color: #CCCCCC;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.education-actions-footer {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1.2rem;
+    margin-top: auto;
+}
+
+.education-link-btn {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.9rem;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.education-empty-state {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 4rem 1rem;
+    border: 1px dashed var(--line);
+    border-radius: 16px;
+}
+/* --- Styling Halaman Form (Add/Edit Education & Project) --- */
+.form-page-section {
+    margin-top: 3rem;
+    max-width: 700px;
+}
+
+.form-page-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #FFFFFF;
+}
+
+.custom-form-container {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 1.5rem;
+}
+
+.form-group-item {
+    margin-bottom: 1.25rem;
+}
+
+.form-group-item label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.form-group-item input, 
+.form-group-item textarea, 
+.form-group-item select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.7rem;
+    background-color: transparent;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    color: #FFFFFF;
+    font: inherit;
+    transition: border-color 0.2s ease, outline-color 0.2s ease;
+}
+
+.form-group-item input:focus, 
+.form-group-item textarea:focus,
+.form-group-item select:focus {
+    outline: 2px solid var(--accent);
+    border-color: var(--accent);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.form-error-msg {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-top: 0.35rem;
+}
+
+.form-actions-wrapper {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-secondary-custom {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content-custom {
+    width: min(100%, 500px);
+    text-align: left;
+}
+
+.modal-heading {
+    margin-bottom: 1.5rem;
+}
+
+.modal-field-group {
+    margin-bottom: 1rem;
+}
+
+.modal-field-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+.modal-textarea-custom {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.modal-field-spacing {
+    margin-bottom: 2rem;
+}
+
+.btn-save-custom {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+}
+.btn-edit-trigger {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.9rem;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 6px;
+}
+.btn-delete-trigger {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 6px;
+}
+.education-modal-heading {
+    margin-bottom: 1.5rem;
+    color: #FFFFFF;
+}
+
+.education-field-group {
+    margin-bottom: 1rem;
+}
+
+.education-field-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.education-field-wrapper {
+    width: 100%;
+}
+
+.education-field-error {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+
+.education-modal-actions {
+    margin-top: 1.5rem;
+}
+
+.btn-education-save {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+}
+.education-textarea-custom {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.education-field-spacing {
+    margin-bottom: 2rem;
+}
+/* --- Penyesuaian Elemen Select Dropdown agar Senada --- */
+.form-group-item select,
+.custom-form-container select,
+.experience-form select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.7rem;
+    background-color: transparent;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    color: #FFFFFF;
+    font: inherit;
+    outline: none;
+    transition: border-color 0.2s ease, outline-color 0.2s ease;
+}
+
+.form-group-item select:focus,
+.custom-form-container select:focus,
+.experience-form select:focus {
+    outline: 2px solid var(--accent);
+    border-color: var(--accent);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.form-group-item select option,
+.custom-form-container select option,
+.experience-form select option {
+    background-color: var(--surface, #121212);
+    color: #FFFFFF;
 }
 @media (max-width: 768px) {
     .profile-layout {

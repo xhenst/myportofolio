@@ -1,4 +1,4 @@
-from main.forms import EducationForm, ProjectForm
+from main.forms import *
 from django.contrib import messages
 from django.core import serializers
 from django.http import HttpResponse
@@ -26,6 +26,19 @@ def show_experience(request):
     }
     return render(request, "experience.html", context)
 
+def create_experience(request):
+    form = ExperienceForm(request.POST or None)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Experience baru berhasil ditambahkan!")
+        return redirect("main:show_experience")
+
+    context = {
+        "name": "Kayla Alifah Khairunisa",
+        "form": form,
+    }
+    return render(request, "experience_form.html", context)
 
 def show_education(request):
     json_response = get_education_json(request)
@@ -137,3 +150,18 @@ def edit_project(request, project_id):
         "project": project,
     }
     return render(request, "edit_project.html", context)
+
+def edit_education(request, education_id):
+    education = get_object_or_404(Education, pk=education_id)
+    form = EducationForm(request.POST or None, instance=education)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Pendidikan berhasil diperbarui!")
+        return redirect("main:show_education")  
+
+    context = {
+        "form": form,
+        "education": education,
+    }
+    return render(request, "edit_education.html", context)

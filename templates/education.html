@@ -5,56 +5,50 @@
 
 {% block content %}
 <section class="tab-content active" id="education">
-    <!-- Header Row (Rapi dan sejajar) -->
-    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 1.5rem; margin-bottom: 5rem;">
-        <h1 style="font-size: 2.5rem; margin: 0; color: #FFFFFF;">Education</h1>
-        <a href="{% url 'main:create_education' %}" class="button" style="background-color: var(--accent); color: var(--surface); border: none; font-weight: 600; padding: 0.6rem 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(180, 122, 154, 0.2);">
+    <!-- Header Row -->
+    <div class="education-header-row">
+        <h1 class="education-header-title">Education</h1>
+        <a href="{% url 'main:create_education' %}" class="button education-add-btn">
             + Tambah
         </a>
     </div>
-    
-
-    <!-- Form Pencarian (Desain Pill/Melengkung) -->
-    <form method="get" action="{% url 'main:show_education' %}" style="margin-top: 1rem; margin-bottom: 2.5rem; display: flex; gap: 0.8rem; max-width: 600px;">
+    <form method="get" action="{% url 'main:show_education' %}" class="education-search-form">
         <input type="search" name="title" value="{{ title_query }}" placeholder="Cari berdasarkan nama edukasi..." 
-               style="flex: 1; padding: 0.8rem 1.5rem; border-radius: 50px; border: 1px solid var(--line); background: transparent; color: var(--ink); font-family: inherit; outline: none; transition: all 0.3s ease;"
-               onfocus="this.style.borderColor='var(--accent)'">
-        <button type="submit" class="button" style="background-color: transparent; color: var(--accent); border: 1px solid var(--accent); border-radius: 50px; padding: 0.8rem 1.8rem;">
+               class="education-search-input">
+        <button type="submit" class="button education-search-btn">
             Cari
         </button>
     </form>
 
     <!-- Daftar Card Education -->
-    <div class="card-list" style="display: grid; gap: 1.5rem;">
+    <div class="education-grid-container">
         {% for education in education_list %}
-            <div class="card" style="background: transparent; border: 1px solid var(--line); border-radius: 16px; padding: 2rem; transition: all 0.3s ease;" 
-                 onmouseover="this.style.borderColor='var(--accent-dark)'; this.style.backgroundColor='rgba(255, 255, 255, 0.02)'" 
-                 onmouseout="this.style.borderColor='var(--line)'; this.style.backgroundColor='transparent'">
+            <div class="education-card-item">
                 
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 1rem;">
-                    <h2 style="font-size: 1.5rem; color: #FFFFFF; margin: 0;">{{ education.school }}</h2>
+                <div class="education-card-header">
+                    <h2 class="education-school-title">{{ education.school }}</h2>
                     <!-- Badge Tanggal -->
-                    <span style="background: rgba(180, 122, 154, 0.1); color: var(--accent); padding: 0.4rem 1.2rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(180, 122, 154, 0.2);">
+                    <span class="education-date-badge">
                         {{ education.started_at }} - {{ education.ended_at }}
                     </span>
                 </div>
                 
-                <h3 style="color: var(--text-muted); font-size: 1rem; font-weight: 400; margin-bottom: 1.5rem;">{{ education.degree }}</h3>
-                <p style="color: #CCCCCC; line-height: 1.6; margin-bottom: 2rem;">{{ education.description }}</p>
+                <h3 class="education-degree-subtitle">{{ education.degree }}</h3>
+                <p class="education-description-text">{{ education.description }}</p>
                 
                 <!-- Area Tombol Aksi di dalam Card -->
-                <div style="display: flex; gap: 1rem; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem;">
+                <div class="education-actions-footer">
                     {% if education.education_url %}
-                        <a href="{{ education.education_url }}" class="button" style="font-size: 0.85rem; padding: 0.5rem 1.2rem; background: transparent; border: 1px solid var(--accent); color: var(--accent);">Lihat Proyek</a>
+                        <a href="{{ education.education_url }}" target="_blank" class="button education-link-btn">Lihat Institusi</a>
                     {% endif %}
-                    
-                    <!-- Panggil Modal Hapus -->
-                    {% include "components/education_delete_modal.html" with education=education %}
+                    {% include "components/education_delete_modal.html" with education=education %}    
+                    {% include "components/education_edit_button.html" with education=education %}
+                    {% include "components/education_edit_modal.html" with education=education form=form %}
                 </div>
             </div>
         {% empty %}
-            <p style="color: var(--text-muted); text-align: center; padding: 4rem 1rem; border: 1px dashed var(--line); border-radius: 16px;">
-                {% if title_query %}Tidak ada proyek dengan nama tersebut.{% else %}Belum ada proyek yang ditambahkan.{% endif %}
+            <p class="education-empty-state">
+                {% if title_query %}Tidak ada edukasi dengan nama tersebut.{% else %}Belum ada edukasi yang ditambahkan.{% endif %}
             </p>
         {% endfor %}
     </div>

@@ -1,6 +1,6 @@
-from django.forms import ModelForm, TextInput, Textarea, URLInput
+from django.forms import ModelForm, TextInput, Textarea, URLInput, Select, CheckboxInput
 
-from main.models import Education, Project
+from main.models import Education, Project, Experience
 
 class EducationForm(ModelForm):
     class Meta:
@@ -76,3 +76,32 @@ class ProjectForm(ModelForm):
                 }
             ),
         }
+class ExperienceForm(ModelForm):
+    class Meta:
+        model = Experience
+        fields = [
+            "title", 
+            "description",
+            "category", 
+            "thumbnail", 
+            "started_at", 
+            "ended_at", 
+        ]
+        labels = {
+            "title":"Nama Experience", 
+            "description":"Deskripsi Experience",
+            "category":"Category experience", 
+            "thumbnail":"URL Thumbnail", 
+            "started_at":"Waktu dimulai", 
+            "ended_at":"Waktu berakhir", 
+        }
+        widgets = {
+            "title": TextInput(), 
+            "description":Textarea(),
+            'category': Select(attrs={'class': 'project-search__input'}),
+            "thumbnail":URLInput(), 
+            "started_at":TextInput(), 
+            "ended_at":TextInput(), 
+        }
+        from django import forms
+from main.models import Experience

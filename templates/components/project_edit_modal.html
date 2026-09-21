@@ -4,51 +4,47 @@
      role="dialog" 
      aria-modal="true">
     
-    <!-- Latar belakang gelap (backdrop) -->
     <button type="button" 
             class="project-delete-modal__backdrop" 
             popovertarget="edit-project-{{ project.id }}" 
             popovertargetaction="hide" 
             aria-label="Tutup form edit"></button>
     
-    <!-- Kotak Modal Form Edit -->
-    <div class="project-delete-modal__content" style="width: min(100%, 500px); text-align: left;">
+    <div class="project-delete-modal__content modal-content-custom">
         <button type="button" class="project-delete-modal__close" popovertarget="edit-project-{{ project.id }}" popovertargetaction="hide">×</button>
         
-        <h2 style="margin-bottom: 1.5rem;">Edit Proyek</h2>
-        
-        <!-- Form mengirim POST ke URL edit_project -->
+        <h2 class="modal-heading">Edit Proyek</h2>
         <form method="post" action="{% url 'main:edit_project' project.id %}">
             {% csrf_token %}
             
-            <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">Nama Proyek</label>
+            <div class="modal-field-group">
+                <label class="modal-field-label">Nama Proyek</label>
                 <input type="text" name="title" value="{{ project.title }}" class="project-search__input" required>
             </div>
             
-            <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">Deskripsi</label>
-                <textarea name="description" class="project-search__input" style="min-height: 100px; resize: vertical;" required>{{ project.description }}</textarea>
+            <div class="modal-field-group">
+                <label class="modal-field-label">Deskripsi</label>
+                <textarea name="description" class="project-search__input modal-textarea-custom" required>{{ project.description }}</textarea>
             </div>
             
-            <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">Tech Stack</label>
+            <div class="modal-field-group">
+                <label class="modal-field-label">Tech Stack</label>
                 <input type="text" name="tech_stack" value="{{ project.tech_stack }}" class="project-search__input" required>
             </div>
             
-            <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">URL Proyek</label>
+            <div class="modal-field-group">
+                <label class="modal-field-label">URL Proyek</label>
                 <input type="url" name="project_url" value="{{ project.project_url }}" class="project-search__input">
             </div>
             
-            <div style="margin-bottom: 2rem;">
-                <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">URL Gambar</label>
+            <div class="modal-field-spacing">
+                <label class="modal-field-label">URL Gambar</label>
                 <input type="url" name="project_image_url" value="{{ project.project_image_url }}" class="project-search__input">
             </div>
             
             <div class="project-delete-modal__actions">
                 <button type="button" class="button button-secondary" popovertarget="edit-project-{{ project.id }}" popovertargetaction="hide">Batal</button>
-                <button type="submit" class="button" style="background-color: var(--accent); color: white; border: none;">Simpan Perubahan</button>
+                <button type="submit" class="button btn-save-custom">Simpan Perubahan</button>
             </div>
         </form>
     </div>
