@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Textarea, URLInput, Select, CheckboxInput
+from django.forms import *
 
 from main.models import Education, Project, Experience
 
@@ -77,6 +77,12 @@ class ProjectForm(ModelForm):
             ),
         }
 class ExperienceForm(ModelForm):
+    is_ongoing = TypedChoiceField(
+        choices=[(True, 'Yes'), (False, 'No')],
+        coerce=lambda val: val == 'True',
+        widget=RadioSelect(attrs={'class': 'form-radio-input'}),
+        label="On-going"
+    )
     class Meta:
         model = Experience
         fields = [
@@ -86,6 +92,7 @@ class ExperienceForm(ModelForm):
             "thumbnail", 
             "started_at", 
             "ended_at", 
+            "is_ongoing"
         ]
         labels = {
             "title":"Nama Experience", 
@@ -100,8 +107,8 @@ class ExperienceForm(ModelForm):
             "description":Textarea(),
             "category": Select(attrs={'class': 'project-search__input'}),
             "thumbnail":URLInput(), 
-            "started_at":TextInput(), 
-            "ended_at":TextInput(), 
+            "started_at": DateInput(attrs={'class': 'project-search__input', 'type': 'date'}),
+            "ended_at": DateInput(attrs={'class': 'project-search__input', 'type': 'date'}),
+            
+            
         }
-        from django import forms
-from main.models import Experience

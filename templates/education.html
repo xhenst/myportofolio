@@ -9,7 +9,7 @@
     <div class="education-header-row">
         <h1 class="education-header-title">Education</h1>
         <a href="{% url 'main:create_education' %}" class="button education-add-btn">
-            + Tambah
+            + Tambah Education
         </a>
     </div>
     <form method="get" action="{% url 'main:show_education' %}" class="education-search-form">
@@ -20,14 +20,12 @@
         </button>
     </form>
 
-    <!-- Daftar Card Education -->
     <div class="education-grid-container">
         {% for education in education_list %}
             <div class="education-card-item">
                 
                 <div class="education-card-header">
                     <h2 class="education-school-title">{{ education.school }}</h2>
-                    <!-- Badge Tanggal -->
                     <span class="education-date-badge">
                         {{ education.started_at }} - {{ education.ended_at }}
                     </span>
@@ -35,8 +33,6 @@
                 
                 <h3 class="education-degree-subtitle">{{ education.degree }}</h3>
                 <p class="education-description-text">{{ education.description }}</p>
-                
-                <!-- Area Tombol Aksi di dalam Card -->
                 <div class="education-actions-footer">
                     {% if education.education_url %}
                         <a href="{{ education.education_url }}" target="_blank" class="button education-link-btn">Lihat Institusi</a>

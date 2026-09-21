@@ -1,0 +1,46 @@
+<div class="experience-delete-wrapper">
+    <button type="button"
+            class="button btn-experience-delete-trigger"
+            popovertarget="delete-experience-{{ experience.id }}"
+            aria-label="Hapus {{ experience.title }}"
+            title="Hapus">
+        Hapus
+    </button>
+</div>
+<div id="delete-experience-{{ experience.id }}"
+     class="experience-delete-modal experience-delete-modal-custom"
+     popover="auto">
+    <button type="button"
+            class="experience-delete-modal__backdrop experience-delete-backdrop-custom"
+            popovertarget="delete-experience-{{ experience.id }}"
+            popovertargetaction="hide"
+            aria-label="Tutup konfirmasi hapus"></button>
+    <div class="experience-delete-box">
+        <button type="button"
+                class="experience-delete-close-btn"
+                popovertarget="delete-experience-{{ experience.id }}"
+                popovertargetaction="hide"
+                aria-label="Tutup konfirmasi hapus">
+            &times;
+        </button>
+        
+        <h2 class="experience-delete-title">Hapus</h2>
+        <p class="experience-delete-desc">
+            Apakah Anda yakin ingin menghapus <br>
+            <strong class="experience-delete-item-title">{{ experience.title }}</strong>?
+        </p>
+        <div class="experience-delete-actions">
+            <button type="button"
+                    class="button btn-experience-cancel"
+                    popovertarget="delete-experience-{{ experience.id }}"
+                    popovertargetaction="hide">Batal</button>
+                
+            <form method="post" action="{% url 'main:delete_experience' experience.id %}" class="form-experience-delete-wrapper">
+                {% csrf_token %}
+                <button type="submit" class="button btn-experience-confirm-delete">
+                    Ya, Hapus
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

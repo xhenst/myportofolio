@@ -6,19 +6,34 @@
 
 {% block content %}
 <section class="tab-content active" id="experience">
-    <h2 class="section-title">Experience</h2>
+    <div class="experience-header-row">
+        <div>
+            <h1 class="experience-header-title">Experience</h1>
+        </div>
+        <a href="{% url 'main:create_experience' %}" class="button experience-add-btn">
+            + Tambah Experience
+        </a>
+    </div>
     
+    <!-- Gunakan card-list dan card bawaan Experience, BUKAN grid education -->
     <div class="card-list">
         {% for experience in experience_list %}
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">{{ experience.title }}</h3>
                     <span class="card-date">
-                        {% if experience.is_ongoing %}Sedang berlangsung{% else %}Selesai{% endif %}
+                        {% if experience.is_ongoing %}On-Going{% else %}Finish{% endif %}
                     </span>
                 </div>
                 <div class="card-subtitle">{{ experience.get_category_display }}</div>
                 <p class="card-desc">{{ experience.description }}</p>
+                
+                <!-- Bungkus tombol aksi agar berjejer rapi ke samping -->
+                <div class="experience-actions-footer" style="display: flex; gap: 0.5rem; align-items: center; margin-top: 1rem;">
+                    {% include "components/experience_delete_modal.html" with experience=experience %}    
+                    {% include "components/experience_edit_button.html" with experience=experience %}
+                    {% include "components/experience_edit_modal.html" with experience=experience form=form %}
+                </div>
             </div>
         {% empty %}
             <p class="empty-state experience-empty-text">Belum ada pengalaman yang ditambahkan.</p>

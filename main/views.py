@@ -142,14 +142,14 @@ def edit_project(request, project_id):
 
     if request.method == "POST" and form.is_valid():
         form.save()
-        messages.success(request, "Proyek berhasil diperbarui!")
+        messages.success(request, "Project berhasil diperbarui!")
         return redirect("main:show_projects")
 
     context = {
         "form": form,
         "project": project,
     }
-    return render(request, "edit_project.html", context)
+    return render(request, "project.html", context)
 
 def edit_education(request, education_id):
     education = get_object_or_404(Education, pk=education_id)
@@ -157,11 +157,34 @@ def edit_education(request, education_id):
 
     if request.method == "POST" and form.is_valid():
         form.save()
-        messages.success(request, "Pendidikan berhasil diperbarui!")
+        messages.success(request, "Education berhasil diperbarui!")
         return redirect("main:show_education")  
 
     context = {
         "form": form,
         "education": education,
     }
-    return render(request, "edit_education.html", context)
+    return render(request, "education.html", context)
+def delete_experience(request, experience_id):
+    edu= get_object_or_404(Experience, pk=experience_id)
+
+    if request.method == "POST":
+        edu.delete()
+        messages.success(request, "Experience berhasil dihapus!")
+        return redirect("main:show_experience")
+
+    return redirect("main:show_experience")
+def edit_experience(request, experience_id):
+    experience = get_object_or_404(Experience, pk=experience_id)
+    form = ExperienceForm(request.POST or None, instance=experience)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Experience berhasil diperbarui!")
+        return redirect("main:show_experience")  
+
+    context = {
+        "form": form,
+        "experience": experience,
+    }
+    return render(request, "experience.html", context)

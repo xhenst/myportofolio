@@ -654,6 +654,144 @@ main {
     background-color: #ff6b6b;
     color: #FFFFFF;
 }
+/* --- Styling Komponen & Modal Delete Experience --- */
+.experience-delete-wrapper {
+    margin: 0;
+}
+
+.btn-experience-delete-trigger {
+    background-color: transparent;
+    color: #ff6b6b;
+    border: 1px solid rgba(255, 107, 107, 0.5);
+    padding: 0.35rem 0.9rem;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-experience-delete-trigger:hover {
+    background-color: rgba(255, 107, 107, 0.1);
+    border-color: #ff6b6b;
+}
+
+.experience-delete-modal-custom {
+    background: transparent;
+    border: none;
+    padding: 0;
+    max-width: 420px;
+    width: 90%;
+    margin: auto;
+}
+
+.experience-delete-backdrop-custom {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 3, 14, 0.85);
+    backdrop-filter: blur(6px);
+    border: none;
+    cursor: default;
+    z-index: -1;
+}
+
+.experience-delete-box {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+.experience-delete-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.experience-delete-close-btn:hover {
+    color: #FFFFFF;
+}
+
+.experience-delete-title {
+    font-size: 1.5rem;
+    color: #FFFFFF;
+    margin-bottom: 1rem;
+}
+
+.experience-delete-desc {
+    color: #CCCCCC;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.experience-delete-item-title {
+    color: #FFFFFF;
+    font-size: 1.1rem;
+}
+
+.experience-delete-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn-experience-cancel {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+}
+
+.form-experience-delete-wrapper {
+    margin: 0;
+}
+
+.btn-experience-confirm-delete {
+    background-color: rgba(255, 107, 107, 0.1);
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-experience-confirm-delete:hover {
+    background-color: #ff6b6b;
+    color: #FFFFFF;
+}
+#id_is_ongoing {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin-top: 0.5rem;
+}
+
+#id_is_ongoing li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text);
+    cursor: pointer;
+}
+
+#id_is_ongoing input[type="radio"] {
+    accent-color: var(--accent);
+    cursor: pointer;
+}
 @media (max-width: 600px) {
     .project-header {
         align-items: flex-start;
@@ -942,14 +1080,14 @@ main {
 }
 
 .education-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     background-color: var(--accent);
     color: var(--surface);
-    border: none;
-    font-weight: 600;
-    padding: 0.6rem 1.5rem;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(180, 122, 154, 0.2);
-    text-decoration: none;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
 }
 
 .education-search-form {
@@ -1229,7 +1367,14 @@ main {
 .education-field-spacing {
     margin-bottom: 2rem;
 }
-/* --- Penyesuaian Elemen Select Dropdown agar Senada --- */
+.experience-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1.5rem;
+    margin-bottom: 5rem;
+}
 .form-group-item select,
 .custom-form-container select,
 .experience-form select {
@@ -1257,6 +1402,66 @@ main {
 .custom-form-container select option,
 .experience-form select option {
     background-color: var(--surface, #121212);
+    color: #FFFFFF;
+}
+.experience-subtitle-custom {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.05em;
+}
+
+.experience-divider-custom {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 1.5rem 0 2rem 0;
+}
+.experience-field-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+.experience-add-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background-color: var(--accent);
+    color: var(--surface);
+    border-radius: 12px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+}
+.card-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: auto; 
+}
+/* --- Styling Tambahan Modal Edit Experience --- */
+.experience-select-custom {
+    color: #FFFFFF;
+    background-color: var(--surface);
+}
+
+.experience-select-custom option {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.experience-radio-group {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+    color: #FFFFFF;
+}
+
+.experience-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
     color: #FFFFFF;
 }
 @media (max-width: 768px) {

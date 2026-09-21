@@ -1,0 +1,74 @@
+<div id="edit-experience-{{ experience.id }}" 
+     class="project-delete-modal" 
+     popover="auto" 
+     role="dialog" 
+     aria-modal="true">
+    
+    <button type="button" 
+            class="project-delete-modal__backdrop" 
+            popovertarget="edit-experience-{{ experience.id }}" 
+            popovertargetaction="hide" 
+            aria-label="Tutup form edit"></button>
+    
+    <div class="project-delete-modal__content modal-content-custom">
+        <button type="button" class="project-delete-modal__close" popovertarget="edit-experience-{{ experience.id }}" popovertargetaction="hide">×</button>
+        
+        <h2 class="experience-modal-heading">Edit Experience</h2>
+        
+        <form method="post" action="{% url 'main:edit_experience' experience.id %}">
+            {% csrf_token %}
+            
+            <!-- Title -->
+            <div class="experience-field-group">
+                <label class="experience-field-label">Title</label>
+                <input type="text" name="title" value="{{ experience.title }}" class="project-search__input" required>
+            </div>
+            <!-- Category -->
+            <div class="experience-field-group">
+                <label class="experience-field-label">Category</label>
+                <select name="category" class="project-search__input experience-select-custom" required>
+                    <option value="internship" {% if experience.category == 'internship' %}selected{% endif %}>Internship</option>
+                    <option value="research" {% if experience.category == 'research' %}selected{% endif %}>Research</option>
+                    <option value="volunteer" {% if experience.category == 'volunteer' %}selected{% endif %}>Volunteer</option>
+                    <option value="part-time" {% if experience.category == 'part-time' %}selected{% endif %}>Part-Time</option>
+                    <option value="full-time" {% if experience.category == 'full-time' %}selected{% endif %}>Full-Time</option>
+                    <option value="freelance" {% if experience.category == 'freelance' %}selected{% endif %}>Freelance</option>
+                </select>
+            </div>
+            <!-- Description -->
+            <div class="experience-field-group">
+                <label class="experience-field-label">Description</label>
+                <textarea name="description" class="project-search__input modal-textarea-custom" >{{ experience.description }}</textarea>
+            </div>
+            <!-- On-going (Yes / No Radio Selection) -->
+            <div class="experience-field-group">
+                <label class="experience-field-label">On-going</label>
+                <div class="experience-radio-group">
+                    <label class="experience-radio-label">
+                        <input type="radio" name="is_ongoing" value="True" {% if experience.is_ongoing %}checked{% endif %}> Yes
+                    </label>
+                    <label class="experience-radio-label">
+                        <input type="radio" name="is_ongoing" value="False" {% if not experience.is_ongoing %}checked{% endif %}> No
+                    </label>
+                </div>
+            </div>
+
+            <!-- Started At -->
+            <div class="experience-field-group">
+                <label class="experience-field-label">Waktu Dimulai</label>
+                <input type="date" name="started_at" value="{{ experience.started_at|date:'Y-m-d' }}" class="project-search__input" required>
+            </div>
+            
+            <!-- Ended At -->
+            <div class="experience-field-group">
+                <label class="experience-field-label">Waktu Berakhir</label>
+                <input type="date" name="ended_at" value="{{ experience.ended_at|date:'Y-m-d' }}" class="project-search__input">
+            </div>
+        
+            <div class="project-delete-modal__actions experience-modal-actions">
+                <button type="button" class="button button-secondary" popovertarget="edit-experience-{{ experience.id }}" popovertargetaction="hide">Batal</button>
+                <button type="submit" class="button btn-experience-save">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>
