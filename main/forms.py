@@ -98,7 +98,7 @@ class ExperienceForm(ModelForm):
         widgets = {
             "title": TextInput(), 
             "description":Textarea(),
-            'category': Select(attrs={'class': 'project-search__input'}),
+            "category": Select(attrs={'class': 'project-search__input'}),
             "thumbnail":URLInput(), 
             "started_at":TextInput(), 
             "ended_at":TextInput(), 
