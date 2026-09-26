@@ -165,7 +165,7 @@ def delete_project(request, project_id):
 
 @login_required(login_url="/login/") 
 def edit_project(request, project_id):
-    if not request.user.is_superuser:
+    if not (request.user.is_superuser or request.user.has_perm('main.change_project')):
         raise PermissionDenied
     project = get_object_or_404(Project, pk=project_id)
     form = ProjectForm(request.POST or None, instance=project)
@@ -183,7 +183,7 @@ def edit_project(request, project_id):
 
 @login_required(login_url="/login/") 
 def edit_education(request, education_id):
-    if not request.user.is_superuser:
+    if not (request.user.is_superuser or request.user.has_perm('main.change_education')):
         raise PermissionDenied
     education = get_object_or_404(Education, pk=education_id)
     form = EducationForm(request.POST or None, instance=education)
@@ -214,7 +214,7 @@ def delete_experience(request, experience_id):
 
 @login_required(login_url="/login/") 
 def edit_experience(request, experience_id):
-    if not request.user.is_superuser:
+    if not (request.user.is_superuser or request.user.has_perm('main.change_experience')):
         raise PermissionDenied
     experience = get_object_or_404(Experience, pk=experience_id)
     form = ExperienceForm(request.POST or None, instance=experience)

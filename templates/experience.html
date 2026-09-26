@@ -31,13 +31,17 @@
                 <p class="card-desc">{{ experience.description }}</p>
                 
                 <!-- Bungkus tombol aksi agar berjejer rapi ke samping -->
-                {% if user.is_superuser %}
-                    <div class="experience-actions-footer" style="display: flex; gap: 0.5rem; align-items: center; margin-top: 1rem;">
-                        {% include "components/experience_delete_modal.html" with experience=experience %}    
+                
+                <div class="experience-actions-footer" style="display: flex; gap: 0.5rem; align-items: center; margin-top: 1rem;">
+                    {% if user.is_superuser %}
+                        {% include "components/experience_delete_modal.html" with experience=experience %} 
+                    {% endif %}    
+                    {% if user.is_superuser or perms.main.change_project %}
                         {% include "components/experience_edit_button.html" with experience=experience %}
                         {% include "components/experience_edit_modal.html" with experience=experience form=form %}
-                    </div>
-                {% endif %} 
+                    {% endif %}
+                </div>
+                
             </div>
         {% empty %}
             <p class="empty-state experience-empty-text">Belum ada pengalaman yang ditambahkan.</p>

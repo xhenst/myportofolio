@@ -54,16 +54,19 @@
                 
                 <!-- Area Tombol Aksi di Bawah Card -->
                 {% include "components/project_star.html" with project=project %}
-                {% if user.is_superuser %}  {# Tambahkan baris ini #}
-                    <div class="project-actions-footer">
-                        {% if project.project_url %}
-                            <a href="{{ project.project_url }}" target="_blank" class="button project-link-btn">Lihat Proyek</a>
-                        {% endif %}
+                 {# Tambahkan baris ini #}
+                <div class="project-actions-footer">
+                    {% if project.project_url %}
+                        <a href="{{ project.project_url }}" target="_blank" class="button project-link-btn">Lihat Proyek</a>
+                    {% endif %}
+                    {% if user.is_superuser or perms.main.change_project %}
                         {% include "components/project_edit_button.html" with project=project %}
                         {% include "components/project_edit_modal.html" with project=project %}
+                    {% endif %}
+                    {% if user.is_superuser%}
                         {% include "components/project_delete_modal.html" with project=project %}
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
         {% empty %}
             <p class="projects-empty-state">
