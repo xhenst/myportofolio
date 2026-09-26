@@ -48,7 +48,7 @@ body {
 }
 
 .brand {
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     color: #ffffff;
     text-decoration: none;
@@ -1507,19 +1507,30 @@ main {
 .button-star {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    background: var(--ink);
+    gap: 0.4rem; /* Jarak antara bintang dan angka */
+    background: transparent; /* Menghilangkan background */
+    border: none; /* Menghilangkan garis tepi/kotak */
+    padding: 0; 
+    cursor: pointer;
 }
 
-.button-star.is-starred {
-    background: var(--accent);
+/* Tampilan bintang default (belum di-star) */
+.button-star .star-icon {
+    font-size: 1.8rem; /* Sesuaikan ukuran bintang */
+    color: #a0a0a0; /* Warna abu-abu untuk outline */
+    line-height: 1;
 }
 
+/* Tampilan bintang setelah di-star */
+.button-star.is-starred .star-icon {
+    color: #FFD700; /* Warna kuning emas */
+}
+
+/* Tampilan angka */
 .star-count {
-    padding: 0.05rem 0.4rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.25);
-    font-size: 0.8rem;
+    font-size: 1rem; /* Sesuaikan ukuran angka */
+    color: var(--text-muted); /* Mengikuti warna teks di sekitarnya (misal: putih/abu terang) */
+    font-weight: 500;
 }
 @media (max-width: 768px) {
     .profile-layout {
