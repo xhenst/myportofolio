@@ -13,9 +13,11 @@
             </p>
             <h1 class="projects-header-title">Projects</h1>
         </div>
-        <a href="{% url 'main:create_project' %}" class="button projects-add-btn">
-            + Tambah Proyek
-        </a>
+        {% if user.is_superuser %}
+            <a href="{% url 'main:create_project' %}" class="button projects-add-btn">
+                + Tambah Proyek
+            </a>
+        {% endif %}  
     </div>
 
     <!-- Form Pencarian -->
@@ -51,14 +53,17 @@
                 </div>
                 
                 <!-- Area Tombol Aksi di Bawah Card -->
-                <div class="project-actions-footer">
-                    {% if project.project_url %}
-                        <a href="{{ project.project_url }}" target="_blank" class="button project-link-btn">Lihat Proyek</a>
-                    {% endif %}
-                    {% include "components/project_edit_button.html" with project=project %}
-                    {% include "components/project_edit_modal.html" with project=project %}
-                    {% include "components/project_delete_modal.html" with project=project %}
-                </div>
+                {% include "components/project_star.html" with project=project %}
+                {% if user.is_superuser %}  {# Tambahkan baris ini #}
+                    <div class="project-actions-footer">
+                        {% if project.project_url %}
+                            <a href="{{ project.project_url }}" target="_blank" class="button project-link-btn">Lihat Proyek</a>
+                        {% endif %}
+                        {% include "components/project_edit_button.html" with project=project %}
+                        {% include "components/project_edit_modal.html" with project=project %}
+                        {% include "components/project_delete_modal.html" with project=project %}
+                    </div>
+                {% endif %}
             </div>
         {% empty %}
             <p class="projects-empty-state">

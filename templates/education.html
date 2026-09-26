@@ -8,9 +8,11 @@
     <!-- Header Row -->
     <div class="education-header-row">
         <h1 class="education-header-title">Education</h1>
-        <a href="{% url 'main:create_education' %}" class="button education-add-btn">
-            + Tambah Education
-        </a>
+        {% if user.is_superuser %}
+            <a href="{% url 'main:create_education' %}" class="button education-add-btn">
+                + Tambah Education
+            </a>
+        {% endif %}
     </div>
     <form method="get" action="{% url 'main:show_education' %}" class="education-search-form">
         <input type="search" name="title" value="{{ title_query }}" placeholder="Cari berdasarkan nama edukasi..." 
@@ -33,14 +35,16 @@
                 
                 <h3 class="education-degree-subtitle">{{ education.degree }}</h3>
                 <p class="education-description-text">{{ education.description }}</p>
-                <div class="education-actions-footer">
-                    {% if education.education_url %}
-                        <a href="{{ education.education_url }}" target="_blank" class="button education-link-btn">Lihat Institusi</a>
-                    {% endif %}
-                    {% include "components/education_delete_modal.html" with education=education %}    
-                    {% include "components/education_edit_button.html" with education=education %}
-                    {% include "components/education_edit_modal.html" with education=education form=form %}
-                </div>
+                {% if user.is_superuser %}
+                    <div class="education-actions-footer">
+                        {% if education.education_url %}
+                            <a href="{{ education.education_url }}" target="_blank" class="button education-link-btn">Lihat Institusi</a>
+                        {% endif %}
+                        {% include "components/education_delete_modal.html" with education=education %}    
+                        {% include "components/education_edit_button.html" with education=education %}
+                        {% include "components/education_edit_modal.html" with education=education form=form %}
+                    </div>
+                {% endif %}
             </div>
         {% empty %}
             <p class="education-empty-state">
