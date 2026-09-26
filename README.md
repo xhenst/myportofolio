@@ -66,3 +66,18 @@ Dalam tugas ini, saya menggunakan Gemini untuk membantu membuat fungsi CRUD pada
 * **Tools yang Digunakan:** Gemini
 * **Analisis Keterbatasan AI:** AI sering kali memberikan hasil yang kurang pas—misalnya memberikan penamaan kelas atau elemen (seperti tombol) yang berbeda dengan struktur kode yang sudah saya buat sebelumnya, sehingga harus saya periksa dan ubah satu persatu. Selain itu, tipe input dan isi data pada setiap modul memiliki karakteristik yang berbeda-beda (*education*, *project*, dan *experience*), sehingga AI tidak bisa langsung menyamakannya secara otomatis.
 * **Perbaikan Manual:** Untuk mengatasi keterbatasan tersebut, saya meneliti kembali kode yang dihasilkan AI, menyesuaikan nama kelas/elemen agar konsisten dengan proyek saya, serta menyesuaikan tipe input, *form*, dan logika program secara manual agar setiap modul dapat menerima data dengan benar sesuai struktur aslinya.
+
+
+### Penggunaan AI Tugas 4
+
+Dalam tugas ini, saya menggunakan Gemini sebatas untuk membantu mencari tahu penyebab *error* (troubleshooting) saat menerapkan pembatasan hak akses, serta meminta referensi dasar Flexbox untuk merapikan *navbar*.
+
+**Lampiran Prompting:**
+
+* **Troubleshooting & Styling:** Bagaimana cara membuat elemen *login* dan *register* terdorong ke paling kanan *navbar* menggunakan CSS? Selain itu, kenapa muncul *error* "Invalid block tag" dan "ValueError: perm_list" saat saya mencoba menerapkan *permission*?
+
+**AI Disclosure & Analisis**
+
+* **Tools yang Digunakan:** Gemini
+* **Analisis Keterbatasan AI:** Jawaban AI sering kali bersifat terlalu umum atau kurang pas dengan logika tugas. Misalnya, AI sempat menggabungkan kondisi untuk *Superuser* dan *Editor* dalam satu blok, sehingga pembatasan tombol tidak berfungsi dengan benar. Selain itu, untuk urusan UI/UX, angka *margin* atau *gap* yang disarankan AI jarang langsung cocok dengan desain atau proporsi *website* yang sedang saya buat.
+* **Perbaikan Manual:** Untuk mengatasi hal tersebut, saya harus merombak dan memisahkan logika `if` di *template* HTML secara manual agar tombol Edit dan Hapus muncul sesuai hak akses masing-masing peran. Saya juga mengatur ulang nilai *margin* dan *gap* pada CSS secara mandiri dengan *trial and error* hingga posisi *navbar* dan jarak antar teks benar-benar presisi sesuai dengan desain yang saya inginkan.
