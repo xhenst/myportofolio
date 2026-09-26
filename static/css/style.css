@@ -76,6 +76,12 @@ body {
 .nav-btn:hover {
     color: var(--accent);
 }
+.auth-btn {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300; 
+    color: #ffffff; 
+    text-decoration: none;
+}
 
 .nav-btn.active {
     color: var(--accent);
@@ -1027,15 +1033,21 @@ main {
     margin-top: 3rem;
 }
 
-.profile-study-kicker {
-    color: var(--accent);
-    font-weight: bold;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
+.meta-list dd {
+    margin-left: 0;
+    margin-bottom: 0;
 }
 
+.meta-row-program dt {
+    display: none; 
+}
+.meta-row-program dd {
+    color: #a395b0; 
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
 .profile-greeting-heading {
     line-height: 1.2;
     color: #FFFFFF;
@@ -1045,13 +1057,26 @@ main {
     color: var(--accent);
 }
 
-.profile-npm-text {
-    margin-top: 1.5rem;
-    color: #FFFFFF;
-    line-height: 1.8;
+.meta-row-npm {
+    display: flex; 
+    gap: 6px;     
+    font-size: 22px; 
+    font-weight: bold;
+    color: #ffffff; 
+    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
-.profile-bio-text {
+.meta-row-lastlogin {
+    color: #a395b0; 
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+
+.profile-bio-teks {
     margin-top: 1.5rem;
     color: #CCCCCC;
     line-height: 1.8;

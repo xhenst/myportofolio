@@ -8,14 +8,22 @@
 <section class="tab-content active" id="profile">
     <div class="profile-layout">
         <div class="profile-text profile-text-container">
-            <p class="profile-study-kicker">
-                {{ study_program }} &middot; Universitas Indonesia
-            </p>
+            <dl class="meta-list">
+                <div class="meta-row meta-row-program">
+                    <dt>Program</dt>
+                    <dd>{{ study_program }} &middot; Universitas Indonesia</dd>
+                </div>
+            </dl>
             <h1 class="profile-greeting-heading">
                Hello, I'm <br>
                <span>{{ name }}</span>
             </h1>
-            <h3 class="profile-npm-text">NPM: {{ npm }}</h3>
+            <dl class="meta-list">
+                <div class="meta-row meta-row-npm">
+                    <dt>NPM</dt>
+                    <dd>{{ npm }}</dd>
+                </div>
+            </dl>
             <p class="profile-bio-text">
                 {{ bio }}
             </p>
@@ -24,6 +32,12 @@
                 <a href="https://www.linkedin.com/in/kaylalifahk/" class="social-link">LinkedIn</a>
                 <a href="mailto:kaylalifahk@gmail.com" class="social-link">Email</a>
             </div>
+            <dl class="meta-list">
+                <div class="meta-row meta-row-lastlogin">
+                    <dt>Sesi Terakhir Login</dt>
+                    <dd>{{ last_login }}</dd>
+                </div>
+            </dl>
         </div>
         
         <div class="photo-wrapper profile-photo-container">
