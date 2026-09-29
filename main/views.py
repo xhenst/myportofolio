@@ -130,6 +130,7 @@ def show_projects(request):
     context = {
         "name": "Kayla Alifah Khairunisa",
         "title_query": title_query,
+        "form": ProjectForm(),
     }
     return render(request, "project.html", context)
 def get_projects_json(request):
