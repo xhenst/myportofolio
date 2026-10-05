@@ -1,6 +1,6 @@
 from django.urls import path
 
-from main.views import *
+from main.views import  show_main, show_experience,create_experience,show_education,create_education,get_education_json,delete_education,create_project,show_projects,get_projects_json,delete_project,edit_project,edit_education,delete_experience,edit_experience,register,login_user,logout_user,toggle_star,create_project_ajax,create_experience_ajax,get_experience_json
 app_name = "main"
 
 urlpatterns = [

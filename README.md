@@ -81,3 +81,30 @@ Dalam tugas ini, saya menggunakan Gemini sebatas untuk membantu mencari tahu pen
 * **Tools yang Digunakan:** Gemini
 * **Analisis Keterbatasan AI:** Jawaban AI sering kali bersifat terlalu umum atau kurang pas dengan logika tugas. Misalnya, AI sempat menggabungkan kondisi untuk *Superuser* dan *Editor* dalam satu blok, sehingga pembatasan tombol tidak berfungsi dengan benar. Selain itu, untuk urusan UI/UX, angka *margin* atau *gap* yang disarankan AI jarang langsung cocok dengan desain atau proporsi *website* yang sedang saya buat.
 * **Perbaikan Manual:** Untuk mengatasi hal tersebut, saya harus merombak dan memisahkan logika `if` di *template* HTML secara manual agar tombol Edit dan Hapus muncul sesuai hak akses masing-masing peran. Saya juga mengatur ulang nilai *margin* dan *gap* pada CSS secara mandiri dengan *trial and error* hingga posisi *navbar* dan jarak antar teks benar-benar presisi sesuai dengan desain yang saya inginkan.
+
+
+### Tugas 5
+
+1. *Debouncing* adalah teknik pemrograman yang digunakan untuk menunda atau membatasi frekuensi eksekusi suatu fungsi dalam rentang waktu tertentu, sehingga fungsi tersebut baru akan berjalan setelah pengguna berhenti melakukan aksi (seperti berhenti mengetik) selama jeda waktu yang telah ditentukan. Teknik ini sangat penting diterapkan pada fitur pencarian berbasis AJAX agar server tidak kewalahan menerima kiriman permintaan secara terus-menerus di setiap ketukan tombol. Tanpa *debouncing*, setiap huruf yang diketik akan langsung memicu *fetch request* baru yang dapat membebani sumber daya server, memperlambat performa aplikasi, serta berpotensi menimbulkan masalah *race condition* pada data yang ditampilkan.
+
+2. Dalam JavaScript asinkron, penggunaan `await` berfungsi untuk menunda eksekusi kode selanjutnya di dalam fungsi `async` sampai sebuah *Promise* benar-benar selesai diproses (*resolved*). Ketika kita menggunakan `fetch()`, `await` memastikan bahwa program menunggu hingga koneksi jaringan selesai mengembalikan respons penuh dari server sebelum lanjut membaca atau mengonversi data tersebut menjadi format JSON. Jika kita tidak menggunakan `await`, fungsi `fetch()` akan langsung mengembalikan objek *Promise* yang masih berstatus *pending* alih-alih data aslinya, sehingga baris kode berikutnya akan gagal membaca data dan memicu *error*.
+
+3. Serangan XSS (*Cross-Site Scripting*) adalah kerentanan keamanan web di mana penyerang dapat menyisipkan skrip berbahaya—seperti kode JavaScript atau tag HTML injeksi—ke dalam halaman web yang nantinya akan dieksekusi oleh peramban pengguna lain. Data yang ditampilkan melalui AJAX dan JavaScript jauh lebih rentan terhadap serangan ini daripada data dari *template* Django karena Django secara otomatis melakukan *escaping* karakter khusus di sisi server. Sebaliknya, ketika JavaScript menyisipkan data mentah dari respons JSON ke dalam DOM menggunakan properti seperti `innerHTML`, peramban akan langsung membaca dan menjalankan kode apa pun yang terkandung di dalamnya, sehingga memerlukan penanganan keamanan tambahan seperti fungsi `escapeHtml` di sisi *frontend* dan `strip_tags` di sisi *backend*.
+
+### Penggunaan AI Tugas 5
+
+Dalam tugas ini, saya menggunakan Gemini untuk membantu mengimplementasikan materi dan pola dari Tutorial 05—seperti pemuatan data asinkron via AJAX, pencarian dinamis dengan *debouncing*, form tambah data berbasis modal, serta perlindungan keamanan XSS (*client-side* `escapeHtml` dan *backend* `strip_tags`)—secara *end-to-end* ke dalam modul **Experience** pada portofolio.
+
+**Lampiran Prompting:**
+* **Implementasi Tutorial 5 ke Modul Experience:** Berdasarkan konsep AJAX, modal, dan pencegahan XSS yang dipelajari di Tutorial 05, bantu saya mengimplementasikannya ke modul *Experience* di Django, termasuk membuat fungsi `fetch` data, pengaturan form modal interaktif, pencarian tanpa *reload*, serta penerapan fungsi keamanan `escapeHtml` dan `strip_tags`.
+
+**AI Disclosure & Analisis**
+* **Tools yang Digunakan:** Gemini
+* **Analisis Keterbatasan AI:** AI terkadang menyarankan struktur HTML mentah atau penggunaan *class* CSS generik yang tidak sesuai dengan desain *custom* tema proyek saya. AI juga kerap memberikan pemetaan *field* atau nama variabel yang berbeda dengan struktur model *Experience* yang saya miliki, sehingga elemen kartu tidak langsung menyatu dengan gaya halaman *Experience*.
+* **Perbaikan Manual:** Untuk mengatasi keterbatasan tersebut, saya melakukan verifikasi dan penyesuaian kode secara manual, menyelaraskan struktur elemen HTML kartu *Experience* agar mendaur ulang kelas CSS yang sudah ada di halaman *Education* (`education-card-item`, `education-card-header`, dll.), memastikan *endpoint* URL Django terpanggil dengan benar, serta menguji coba fungsionalitas CRUD AJAX secara langsung di *browser* dan terminal Django.
+
+**Log Interaksi AI (Implementasi Tutorial 5 ke Modul Experience):**
+1. **Integrasi AJAX GET & Render Card:** Menyesuaikan skrip `fetch` agar mengambil data *experience* dari server dan merendernya secara dinamis ke dalam DOM.
+2. **Pencarian Dinamis & Debouncing:** Mengonfigurasi *event listener* pada kolom pencarian agar menyaring data *experience* secara asinkron.
+3. **Sinkronisasi Tampilan dengan Education:** Menata ulang struktur elemen kartu *Experience* agar menggunakan kelas CSS yang konsisten dengan halaman *Education*.
+4. **Implementasi Keamanan XSS:** Menambahkan fungsi `escapeHtml` pada tingkat *frontend* untuk seluruh teks dinamis serta menambahkan metode `clean_*` menggunakan `strip_tags` pada kelas `ExperienceForm` di sisi *backend*.

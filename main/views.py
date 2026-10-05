@@ -1,4 +1,4 @@
-from main.forms import *
+from main.forms import ExperienceForm, EducationForm, ProjectForm
 from django.contrib import messages
 from django.core import serializers
 from django.http import HttpResponse,  JsonResponse
@@ -59,12 +59,14 @@ def show_education(request):
         json_response.content.decode("utf-8"),
     )
     education = [edu.object for edu in education]
-    title_query = request.GET.get("title", "").strip()
+    degree_query = request.GET.get("degree", "").strip()
+    if degree_query:
+        education = [edu for edu in education if degree_query.lower() in edu.degree.lower()]
 
     context = {
         "name": "Kayla Alifah Khairunisa",
         "education_list": education,
-        "title_query": title_query,
+        "degree_query": degree_query,
     }
     return render(request, "education.html", context)
 
@@ -87,11 +89,11 @@ def create_education(request):
     }
     return render(request, "education_form.html", context)
 def get_education_json(request):
-    title_query = request.GET.get("title", "").strip()
+    degree_query = request.GET.get("degree", "").strip() 
     education = Education.objects.all()
 
-    if title_query:
-        education = education.filter(title__icontains=title_query)
+    if degree_query:
+        education = education.filter(degree__icontains=degree_query)  
 
     education_json = serializers.serialize("json", education)
     return HttpResponse(education_json, content_type="application/json")
