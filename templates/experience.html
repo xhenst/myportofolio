@@ -101,47 +101,49 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+}
 
-// Membuat elemen card experience dengan mendaur ulang class dari Education
 function buildExperienceCardElement(item) {
     const exp = item.fields;
     const expId = item.pk;
 
     const articleElement = document.createElement('div');
-    // Menggunakan class pembungkus utama dari Education
     articleElement.className = 'education-card-item'; 
 
-    // Ekstrak tahun untuk badge
     const startYear = exp.started_at ? exp.started_at.substring(0, 4) : '';
     const endYear = exp.is_ongoing ? 'Now' : (exp.ended_at ? exp.ended_at.substring(0, 4) : '');
     const dateText = (startYear || endYear) ? `${startYear} - ${endYear}` : '';
 
-    // Menggunakan class badge dari Education
-    const badgeHtml = dateText ? `<span class="education-date-badge">${dateText}</span>` : '';
+    const badgeHtml = dateText ? `<span class="education-date-badge">${escapeHtml(dateText)}</span>` : '';
 
     const deleteUrl = "{% url 'main:delete_experience' '00000000-0000-0000-0000-000000000000' %}".replace('00000000-0000-0000-0000-000000000000', expId);
     const editUrl = "{% url 'main:edit_experience' '00000000-0000-0000-0000-000000000000' %}".replace('00000000-0000-0000-0000-000000000000', expId);
 
-    // Menggunakan class footer dan tombol dari Education
     const adminHtml = IS_SUPERUSER 
         ? `<div class="education-actions-footer">
             <form method="post" action="${deleteUrl}" style="margin: 0; display: inline-block;">
                 {% csrf_token %}
-                <button type="submit" class="button" onclick="return confirm('Yakin ingin menghapus experience ini?');">Hapus</button>
+                <button type="submit" class="button button-danger" onclick="return confirm('Yakin ingin menghapus experience ini?');">Hapus</button>
             </form>
             <a href="${editUrl}" class="button">Edit</a>
            </div>`
         : '';
 
-    // Susunan HTML persis seperti di education.html
     const completeCardHtml = `
         <div class="education-card-header">
-            <h2 class="education-school-title">${exp.title}</h2>
+            <h2 class="education-school-title">${escapeHtml(exp.title)}</h2>
             ${badgeHtml}
         </div>
         
-        <h3 class="education-degree-subtitle">${exp.category}</h3>
-        ${exp.description ? `<p class="education-description-text">${exp.description}</p>` : ''}
+        <h3 class="education-degree-subtitle">${escapeHtml(exp.category)}</h3>
+        ${exp.description ? `<p class="education-description-text">${escapeHtml(exp.description)}</p>` : ''}
         
         ${adminHtml}
     `;
