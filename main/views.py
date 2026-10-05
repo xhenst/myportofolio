@@ -30,7 +30,7 @@ def show_main(request):
 def show_experience(request):
     context = {
         "name": "Kayla Alifah Khairunisa",
-        "experience_list": Experience.objects.all(),
+        "form": ExperienceForm(),
     }
     return render(request, "experience.html", context)
 
@@ -304,6 +304,52 @@ def create_project_ajax(request):
         project = form.save()
         return JsonResponse(
             {"message": "Proyek berhasil ditambahkan.", "pk": str(project.id)},
+            status=201,
+        )
+
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
+
+
+def get_experience_json(request):
+    title_query = request.GET.get("title", "").strip()
+    experiences = Experience.objects.all()
+
+    if title_query:
+        experiences = experiences.filter(title__icontains=title_query)
+
+    data = []
+    for exp in experiences:
+        data.append({
+            "pk": str(exp.id),
+            "fields": {
+                "title": exp.title,
+                "description": exp.description,
+                "category": exp.category,
+                "thumbnail": exp.thumbnail,
+                # HAPUS baris "company": exp.company jika masih ada di sini
+                "started_at": exp.started_at.strftime('%Y-%m-%d') if exp.started_at else None,
+                "ended_at": exp.ended_at.strftime('%Y-%m-%d') if exp.ended_at else None,
+                "is_ongoing": exp.is_ongoing,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
+
+@require_POST
+def create_experience_ajax(request):
+    # Validasi user seperti pada project
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan experience."},
+            status=403,
+        )
+
+    # Menggunakan ExperienceForm agar validasi tipe data (seperti DateTime dan Boolean) tertangani otomatis
+    form = ExperienceForm(request.POST)
+    if form.is_valid():
+        experience = form.save()
+        return JsonResponse(
+            {"message": "Experience berhasil ditambahkan.", "pk": str(experience.id)},
             status=201,
         )
 
