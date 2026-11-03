@@ -33,7 +33,6 @@ def show_experience(request):
         "form": ExperienceForm(),
     }
     return render(request, "experience.html", context)
-
 @login_required(login_url="/login/") 
 def create_experience(request):
     if not request.user.is_superuser:
@@ -328,7 +327,6 @@ def get_experience_json(request):
                 "description": exp.description,
                 "category": exp.category,
                 "thumbnail": exp.thumbnail,
-                # HAPUS baris "company": exp.company jika masih ada di sini
                 "started_at": exp.started_at.strftime('%Y-%m-%d') if exp.started_at else None,
                 "ended_at": exp.ended_at.strftime('%Y-%m-%d') if exp.ended_at else None,
                 "is_ongoing": exp.is_ongoing,
@@ -356,3 +354,11 @@ def create_experience_ajax(request):
         )
 
     return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
+
+
+
+
+            
+            
+            
+    
