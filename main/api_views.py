@@ -7,9 +7,9 @@ from rest_framework.decorators import (
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from main.models import Project
-from main.permissions import IsPortfolioOwnerOrReadOnly
-from main.serializers import ProjectSerializer
+from main.models import Project, Experience
+from main.permissions import IsPortfolioOwnerOrReadOnly, IsPortfolioOwnerOrEditorOrReadOnly
+from main.serializers import ProjectSerializer, ExperienceSerializer
 
 
 @api_view(["GET", "HEAD", "POST"])
@@ -64,4 +64,41 @@ def project_star(request, project_id):
     else:
         project.starred_by.add(request.user)
     serializer = ProjectSerializer(project, context={"request": request})
+    return Response(serializer.data)
+
+@api_view(["GET", "POST"])
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsPortfolioOwnerOrEditorOrReadOnly])
+def experience_list(request):
+    if request.method == "GET":
+        experiences = Experience.objects.all().order_by("-started_at")
+        serializer = ExperienceSerializer(experiences, many=True)
+        return Response(serializer.data)
+
+    serializer = ExperienceSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(["GET", "PUT", "PATCH", "DELETE"])
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsPortfolioOwnerOrEditorOrReadOnly])
+def experience_detail(request, experience_id):
+    experience = get_object_or_404(Experience, pk=experience_id)
+
+    if request.method == "GET":
+        serializer = ExperienceSerializer(experience)
+        return Response(serializer.data)
+
+    if request.method == "DELETE":
+        experience.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    serializer = ExperienceSerializer(
+        experience,
+        data=request.data,
+        partial=request.method == "PATCH",
+    )
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
     return Response(serializer.data)
