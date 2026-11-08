@@ -88,50 +88,78 @@ class ProjectForm(ModelForm):
 
     def clean_description(self):
         return strip_tags(self.cleaned_data["description"]).strip()
+
 class ExperienceForm(ModelForm):
     is_ongoing = TypedChoiceField(
-        choices=[(True, 'Yes'), (False, 'No')],
-        coerce=lambda val: val == 'True',
-        widget=RadioSelect(attrs={'class': 'form-radio-input'}),
-        label="On-going"
+        choices=[
+            ("True", "Yes"),
+            ("False", "No"),
+        ],
+        coerce=lambda val: val == "True",
+        widget=RadioSelect(attrs={"class": "form-radio-input"}),
+        label="On-going",
     )
+
     class Meta:
         model = Experience
         fields = [
-            "title", 
+            "title",
             "description",
-            "category", 
-            "thumbnail", 
-            "started_at", 
-            "ended_at", 
-            "is_ongoing"
+            "category",
+            "thumbnail",
+            "started_at",
+            "ended_at",
+            "is_ongoing",
         ]
+
         labels = {
-            "title":"Nama Experience", 
-            "description":"Deskripsi Experience",
-            "category":"Category experience", 
-            "thumbnail":"URL Thumbnail", 
-            "started_at":"Waktu dimulai", 
-            "ended_at":"Waktu berakhir", 
+            "title": "Nama Experience",
+            "description": "Deskripsi Experience",
+            "category": "Category Experience",
+            "thumbnail": "URL Thumbnail",
+            "started_at": "Waktu Dimulai",
+            "ended_at": "Waktu Berakhir",
         }
+
         widgets = {
-            "title": TextInput(), 
-            "description":Textarea(),
-            "category": Select(attrs={'class': 'project-search__input'}),
-            "thumbnail":URLInput(), 
-            "started_at": DateInput(attrs={'class': 'project-search__input', 'type': 'date'}),
-            "ended_at": DateInput(attrs={'class': 'project-search__input', 'type': 'date'}),
-            
-            
+            "title": TextInput(),
+            "description": Textarea(),
+            "category": Select(
+                attrs={"class": "project-search__input"}
+            ),
+            "thumbnail": URLInput(),
+            "started_at": DateInput(
+                attrs={
+                    "class": "project-search__input",
+                    "type": "date",
+                }
+            ),
+            "ended_at": DateInput(
+                attrs={
+                    "class": "project-search__input",
+                    "type": "date",
+                }
+            ),
         }
+
     def clean_title(self):
-        title = strip_tags(self.cleaned_data.get("title", "")).strip()
+        title = strip_tags(
+            self.cleaned_data.get("title", "")
+        ).strip()
+
         if not title:
-            raise ValidationError("Judul experience tidak boleh hanya berisi tag HTML.")
+            raise ValidationError(
+                "Judul experience tidak boleh hanya berisi tag HTML."
+            )
+
         return title
 
     def clean_category(self):
-        return strip_tags(self.cleaned_data.get("category", "")).strip()
+        return strip_tags(
+            self.cleaned_data.get("category", "")
+        ).strip()
 
     def clean_description(self):
-        return strip_tags(self.cleaned_data.get("description", "")).strip()
+        return strip_tags(
+            self.cleaned_data.get("description", "")
+        ).strip()

@@ -27,12 +27,26 @@ def show_main(request):
     return render(request, "index.html", context)
 
 
+
 def show_experience(request):
+    user = request.user
+
+    is_owner = user.is_authenticated and user.is_superuser
+
+    is_editor = (
+        user.is_authenticated
+        and user.groups.filter(name="Editor").exists()
+    )
+
     context = {
         "name": "Kayla Alifah Khairunisa",
         "form": ExperienceForm(),
+        "is_owner": is_owner,
+        "is_editor": is_editor,
     }
+
     return render(request, "experience.html", context)
+
 @login_required(login_url="/login/") 
 def create_experience(request):
     if not request.user.is_superuser:

@@ -43,6 +43,8 @@ class ProjectSerializer(serializers.ModelSerializer):
         return ", ".join(user.username for user in obj.starred_by.all())
     
 class ExperienceSerializer(serializers.ModelSerializer):
+    star_count = serializers.SerializerMethodField()
+    is_starred = serializers.SerializerMethodField()
     class Meta:
         model = Experience
         fields = [
