@@ -72,14 +72,36 @@ def project_star(request, project_id):
 def experience_list(request):
     if request.method == "GET":
         experiences = Experience.objects.all().order_by("-started_at")
-        serializer = ExperienceSerializer(experiences, many=True)
+
+        search = request.query_params.get("search", "").strip()
+        if search:
+            experiences = experiences.filter(
+                title__icontains=search
+            ) | experiences.filter(
+                description__icontains=search
+            )
+
+        serializer = ExperienceSerializer(
+            experiences,
+            many=True,
+            context={"request": request}
+        )
         return Response(serializer.data)
 
-    serializer = ExperienceSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
+    elif request.method == "POST":
+        serializer = ExperienceSerializer(
+            data=request.data,
+            context={"request": request}
+        )
 
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED
+        )
+    
 @api_view(["GET", "PUT", "PATCH", "DELETE"])
 @authentication_classes([SessionAuthentication])
 @permission_classes([IsPortfolioOwnerOrEditorOrReadOnly])
@@ -87,18 +109,46 @@ def experience_detail(request, experience_id):
     experience = get_object_or_404(Experience, pk=experience_id)
 
     if request.method == "GET":
-        serializer = ExperienceSerializer(experience)
+        serializer = ExperienceSerializer(
+            experience,
+            context={"request": request}
+        )
         return Response(serializer.data)
 
-    if request.method == "DELETE":
+    elif request.method in ["PUT", "PATCH"]:
+        serializer = ExperienceSerializer(
+            experience,
+            data=request.data,
+            partial=(request.method == "PATCH"),
+            context={"request": request}
+        )
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+    elif request.method == "DELETE":
         experience.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(["POST"])
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsAuthenticated])
+def experience_star(request, experience_id):
+    experience = get_object_or_404(Experience, pk=experience_id)
+
+    if experience.starred_by.filter(pk=request.user.pk).exists():
+        experience.starred_by.remove(request.user)
+    else:
+        experience.starred_by.add(request.user)
 
     serializer = ExperienceSerializer(
         experience,
-        data=request.data,
-        partial=request.method == "PATCH",
+        context={"request": request},
     )
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    return Response(serializer.data)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)

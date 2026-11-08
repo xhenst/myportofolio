@@ -21,7 +21,13 @@ class Experience(models.Model):
     thumbnail = models.URLField(blank=True, default="")
     started_at = models.DateTimeField(blank=True, null=True)
     ended_at = models.DateTimeField(blank=True, null=True)
-    is_ongoing = models.BooleanField(default=False)
+    is_ongoing = models.BooleanField(default=False)  
+    starred_by = models.ManyToManyField(
+        User,
+        related_name="starred_experiences",
+        blank=True,
+    )
+    
     def __str__(self):
         return self.title 
 
