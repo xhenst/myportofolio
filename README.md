@@ -103,8 +103,46 @@ Dalam tugas ini, saya menggunakan Gemini untuk membantu mengimplementasikan mate
 * **Analisis Keterbatasan AI:** AI terkadang menyarankan struktur HTML mentah atau penggunaan *class* CSS generik yang tidak sesuai dengan desain *custom* tema proyek saya. AI juga kerap memberikan pemetaan *field* atau nama variabel yang berbeda dengan struktur model *Experience* yang saya miliki, sehingga elemen kartu tidak langsung menyatu dengan gaya halaman *Experience*.
 * **Perbaikan Manual:** Untuk mengatasi keterbatasan tersebut, saya melakukan verifikasi dan penyesuaian kode secara manual, menyelaraskan struktur elemen HTML kartu *Experience* agar mendaur ulang kelas CSS yang sudah ada di halaman *Education* (`education-card-item`, `education-card-header`, dll.), memastikan *endpoint* URL Django terpanggil dengan benar, serta menguji coba fungsionalitas CRUD AJAX secara langsung di *browser* dan terminal Django.
 
-**Log Interaksi AI (Implementasi Tutorial 5 ke Modul Experience):**
+**Log Interaksi AI:**
 1. **Integrasi AJAX GET & Render Card:** Menyesuaikan skrip `fetch` agar mengambil data *experience* dari server dan merendernya secara dinamis ke dalam DOM.
 2. **Pencarian Dinamis & Debouncing:** Mengonfigurasi *event listener* pada kolom pencarian agar menyaring data *experience* secara asinkron.
 3. **Sinkronisasi Tampilan dengan Education:** Menata ulang struktur elemen kartu *Experience* agar menggunakan kelas CSS yang konsisten dengan halaman *Education*.
 4. **Implementasi Keamanan XSS:** Menambahkan fungsi `escapeHtml` pada tingkat *frontend* untuk seluruh teks dinamis serta menambahkan metode `clean_*` menggunakan `strip_tags` pada kelas `ExperienceForm` di sisi *backend*.
+
+
+
+### Tugas 6
+
+1. **REST (Representational State Transfer)** adalah gaya arsitektur yang digunakan untuk merancang API agar komunikasi antara client dan server memiliki struktur dan aturan yang konsisten. REST menggunakan resource sebagai objek utama yang diakses melalui URL serta memanfaatkan HTTP method seperti GET, POST, PUT, PATCH, dan DELETE untuk menentukan tindakan terhadap resource tersebut. Mengembalikan JSON saja belum cukup untuk menyebut sebuah API sebagai RESTful karena JSON hanya merupakan format pertukaran data, sedangkan REST juga memiliki prinsip lain seperti penggunaan resource yang jelas, stateless communication, penggunaan HTTP method sesuai fungsinya, dan HTTP status code yang tepat. Perbedaan `PUT` dan `PATCH` terletak pada cakupan perubahan datanya. `PUT` digunakan untuk memperbarui keseluruhan data suatu resource, sedangkan `PATCH` digunakan untuk memperbarui sebagian data saja tanpa harus mengirim seluruh field. Contohnya, `PUT` digunakan ketika ingin mengganti seluruh informasi Experience, sementara `PATCH` digunakan ketika hanya ingin mengubah judul Experience tanpa mengubah informasi lainnya.
+
+2. **Serializer** pada Django REST Framework berfungsi untuk mengubah data model Django menjadi format yang dapat dikirim melalui API, seperti JSON, serta mengubah data yang diterima dari client menjadi data yang dapat diproses oleh Django. Serializer juga bertanggung jawab melakukan validasi input sebelum data disimpan ke database agar data yang masuk sesuai dengan aturan yang telah ditentukan. Dibandingkan merakit dictionary secara manual menggunakan `JsonResponse` seperti pada Tutorial 05, serializer lebih praktis karena tidak perlu menyusun dictionary untuk setiap field secara manual, menyediakan validasi data, mendukung proses CRUD, serta membuat struktur data dan aturan validasi lebih terorganisasi. Dengan demikian, pengelolaan data API menjadi lebih konsisten, terstruktur, dan mudah dikembangkan.
+
+3. **Autentikasi (authentication)** adalah proses untuk memverifikasi identitas pengguna yang mengakses API, sedangkan **otorisasi (authorization)** adalah proses menentukan tindakan apa saja yang boleh dilakukan oleh pengguna berdasarkan identitas dan hak aksesnya. Pada Django REST Framework, autentikasi ditangani melalui authentication class, sedangkan otorisasi ditangani melalui permission class. Contohnya pada fitur Experience, pengunjung dapat melihat data, pengguna biasa dapat memberikan star, Editor dapat memperbarui data menggunakan PATCH, dan pemilik memiliki hak untuk menambahkan serta menghapus data. Pemeriksaan hak akses harus dilakukan melalui permission class di server karena menyembunyikan tombol tertentu pada template hanya membatasi tampilan antarmuka dan tidak benar-benar mencegah pengguna mengirim request API secara langsung. Dengan permission class, server tetap memeriksa setiap request sehingga pengguna hanya dapat melakukan tindakan sesuai dengan hak aksesnya.
+
+4. **CSRF (Cross-Site Request Forgery)** merupakan serangan yang memanfaatkan session pengguna yang masih aktif untuk mengirimkan request tanpa sepengetahuan pengguna tersebut. Ketika API menggunakan `SessionAuthentication`, browser akan mengirimkan cookie session secara otomatis bersama request. Oleh karena itu, request yang mengubah data seperti POST, PUT, PATCH, dan DELETE memerlukan token CSRF sebagai perlindungan tambahan untuk memastikan bahwa request berasal dari sumber yang sah. Token CSRF membantu mencegah pihak lain memanfaatkan session pengguna untuk melakukan perubahan data tanpa izin. Test yang menggunakan `force_authenticate` tidak cukup untuk membuktikan perlindungan CSRF berjalan karena metode tersebut melewati proses autentikasi normal Django REST Framework, sehingga mekanisme session dan pemeriksaan CSRF tidak diuji sebagaimana mestinya. Untuk menguji perlindungan tersebut, digunakan `APIClient(enforce_csrf_checks=True)` dan `.login()` agar autentikasi dilakukan melalui session seperti penggunaan browser.
+
+### Penggunaan AI Tugas 6
+
+Dalam tugas ini, saya menggunakan Gemini sebagai alat bantu selama proses pengembangan modul **Experience** untuk memahami dan menyesuaikan implementasi Django REST Framework (DRF) dengan struktur proyek yang sudah ada. Penggunaan AI dilakukan secara bertahap, mulai dari mendiskusikan perubahan endpoint dari implementasi sebelumnya ke DRF, memahami penyesuaian serializer dan permission class, hingga mengevaluasi hasil implementasi melalui pengujian API.
+
+**Lampiran Prompting:**
+
+* **Penyesuaian Endpoint Experience ke DRF:** Mendiskusikan bagian-bagian implementasi Experience yang perlu disesuaikan setelah menggunakan Django REST Framework, termasuk perubahan proses pengambilan dan pengiriman data melalui endpoint API.
+* **Penyesuaian Serializer:** Mendiskusikan error yang muncul pada `ExperienceSerializer`, khususnya terkait pemetaan field model dan penggunaan `SerializerMethodField` untuk data seperti `star_count` dan `is_starred`.
+* **Pengaturan Hak Akses:** Mendiskusikan penerapan `IsPortfolioOwnerOrEditorOrReadOnly` agar hak akses pemilik, Editor, pengguna biasa, dan pengunjung sesuai dengan ketentuan tugas.
+* **Penyesuaian Testing:** Mendiskusikan penyusunan test menggunakan `APITestCase`, termasuk cara memeriksa perubahan database ketika request ditolak, pengujian validasi input, dan fungsionalitas star.
+* **Pengujian CSRF:** Mendiskusikan penggunaan `APIClient(enforce_csrf_checks=True)` dan `.login()` untuk memahami cara menguji perlindungan CSRF pada API yang menggunakan `SessionAuthentication`.
+
+**AI Disclosure & Analisis**
+
+* **Tools yang Digunakan:** Gemini
+* **Analisis Keterbatasan AI:** AI terkadang memberikan contoh kode yang belum sepenuhnya sesuai dengan struktur model, serializer, dan endpoint yang sudah ada pada proyek saya. Beberapa saran juga masih memerlukan penyesuaian, terutama terkait field yang tersedia pada model Experience, konfigurasi permission class, serta perilaku autentikasi dan CSRF. Pada bagian testing, AI juga memberikan asumsi awal mengenai data dan relasi model yang perlu diperiksa kembali agar pengujian sesuai dengan implementasi sebenarnya.
+* **Perbaikan Manual:** Saya melakukan penyesuaian secara bertahap dengan memeriksa kode yang sudah ada, mencocokkan saran AI dengan struktur proyek, serta memahami error yang muncul selama proses implementasi. Saya juga menjalankan pengujian melalui terminal Django untuk memeriksa apakah endpoint, aturan permission, dan fungsionalitas yang diterapkan sudah berjalan sesuai kebutuhan.
+
+**Log Interaksi AI:**
+
+1. **Migrasi Integrasi ke DRF:** Mendiskusikan penyesuaian implementasi Experience dari penggunaan endpoint sebelumnya ke endpoint Django REST Framework.
+2. **Penyesuaian Serializer:** Mengevaluasi error pada serializer, khususnya pemetaan field model dan penggunaan field tambahan seperti `star_count` dan `is_starred`.
+3. **Integrasi CRUD dengan DRF:** Mendiskusikan penyesuaian fungsi JavaScript pada halaman Experience agar operasi tambah, edit, hapus, dan pengambilan data menggunakan endpoint DRF.
+4. **Implementasi Permission Berdasarkan Role:** Mengevaluasi aturan akses untuk pengunjung, pengguna biasa, Editor, dan pemilik agar sesuai dengan ketentuan tugas.
+5. **Penyusunan dan Evaluasi Testing:** Mendiskusikan error dan penyesuaian test API, termasuk pemeriksaan isi database, validasi input, star, serta pengujian CSRF.
