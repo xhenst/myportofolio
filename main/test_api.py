@@ -5,7 +5,8 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
-from main.models import Project
+from main.models import Project, Experience
+
 
 
 class ProjectAPITest(APITestCase):
@@ -136,3 +137,461 @@ class ProjectAPITest(APITestCase):
             self.list_url, self.payload, format="json", HTTP_X_CSRFTOKEN=token,
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        
+
+class ExperienceAPITest(APITestCase):
+
+    def setUp(self):
+        self.owner = User.objects.create_superuser(
+            username="owner",
+            email="owner@example.com",
+            password="owner123"
+        )
+
+        # Membuat akun Editor
+        self.editor = User.objects.create_user(
+            username="editor",
+            email="editor@example.com",
+            password="editor123"
+        )
+
+        editor_group, _ = Group.objects.get_or_create(name="Editor")
+        self.editor.groups.add(editor_group)
+
+        # Membuat akun pengguna biasa
+        self.regular_user = User.objects.create_user(
+            username="regular",
+            email="regular@example.com",
+            password="regular123"
+        )
+
+        # URL API
+        self.list_url = "/api/v1/experiences/"
+
+        # Membuat Experience untuk kebutuhan testing
+        self.experience = Experience.objects.create(
+            title="Software Engineer Intern",
+            description="Working as an intern",
+            category="internship",
+            thumbnail="https://example.com/image.jpg",
+            is_ongoing=True
+        )
+
+        self.detail_url = (
+            f"/api/v1/experiences/{self.experience.id}/"
+        )
+
+        self.star_url = (
+            f"/api/v1/experiences/{self.experience.id}/star/"
+        )
+
+        # Payload valid untuk membuat Experience
+        self.valid_payload = {
+            "title": "Data Analyst Intern",
+            "description": "Working with data",
+            "category": "internship",
+            "thumbnail": "https://example.com/data.jpg",
+            "is_ongoing": True
+        }
+
+    # ==========================================
+    # ANONYMOUS USER / PENGUNJUNG
+    # ==========================================
+
+    def test_anonymous_cannot_create_experience(self):
+        initial_count = Experience.objects.count()
+
+        response = self.client.post(
+            self.list_url,
+            self.valid_payload,
+            format="json"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count
+        )
+
+    def test_anonymous_cannot_update_experience(self):
+        initial_title = self.experience.title
+
+        response = self.client.patch(
+            self.detail_url,
+            {"title": "Updated by Anonymous"},
+            format="json"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+        self.experience.refresh_from_db()
+
+        self.assertEqual(
+            self.experience.title,
+            initial_title
+        )
+
+    def test_anonymous_cannot_delete_experience(self):
+        initial_count = Experience.objects.count()
+
+        response = self.client.delete(self.detail_url)
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count
+        )
+
+        self.assertTrue(
+            Experience.objects.filter(
+                pk=self.experience.pk
+            ).exists()
+        )
+
+    # ==========================================
+    # REGULAR USER / PENGGUNA BIASA
+    # ==========================================
+
+    def test_regular_user_cannot_create_experience(self):
+        self.client.force_authenticate(user=self.regular_user)
+
+        initial_count = Experience.objects.count()
+
+        response = self.client.post(
+            self.list_url,
+            self.valid_payload,
+            format="json"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count
+        )
+
+    def test_regular_user_cannot_update_experience(self):
+        self.client.force_authenticate(user=self.regular_user)
+
+        initial_title = self.experience.title
+
+        response = self.client.patch(
+            self.detail_url,
+            {"title": "Updated by Regular User"},
+            format="json"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+        self.experience.refresh_from_db()
+
+        self.assertEqual(
+            self.experience.title,
+            initial_title
+        )
+
+    def test_regular_user_cannot_delete_experience(self):
+        self.client.force_authenticate(user=self.regular_user)
+
+        initial_count = Experience.objects.count()
+
+        response = self.client.delete(self.detail_url)
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count
+        )
+
+        self.assertTrue(
+            Experience.objects.filter(
+                pk=self.experience.pk
+            ).exists()
+        )
+
+    # ==========================================
+    # EDITOR
+    # ==========================================
+
+    def test_editor_can_update_experience(self):
+        self.client.force_authenticate(user=self.editor)
+
+        response = self.client.patch(
+            self.detail_url,
+            {"title": "Updated by Editor"},
+            format="json"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK
+        )
+
+        self.experience.refresh_from_db()
+
+        self.assertEqual(
+            self.experience.title,
+            "Updated by Editor"
+        )
+
+    def test_editor_cannot_create_experience(self):
+        self.client.force_authenticate(user=self.editor)
+
+        initial_count = Experience.objects.count()
+
+        response = self.client.post(
+            self.list_url,
+            self.valid_payload,
+            format="json"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count
+        )
+
+    def test_editor_cannot_delete_experience(self):
+        self.client.force_authenticate(user=self.editor)
+
+        initial_count = Experience.objects.count()
+
+        response = self.client.delete(self.detail_url)
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count
+        )
+
+        self.assertTrue(
+            Experience.objects.filter(
+                pk=self.experience.pk
+            ).exists()
+        )
+
+    # ==========================================
+    # OWNER / PEMILIK
+    # ==========================================
+
+    def test_owner_can_create_experience(self):
+        self.client.force_authenticate(user=self.owner)
+
+        initial_count = Experience.objects.count()
+
+        response = self.client.post(
+            self.list_url,
+            self.valid_payload,
+            format="json"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_201_CREATED
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count + 1
+        )
+
+        self.assertTrue(
+            Experience.objects.filter(
+                title="Data Analyst Intern"
+            ).exists()
+        )
+
+    def test_owner_can_delete_experience(self):
+        self.client.force_authenticate(user=self.owner)
+
+        initial_count = Experience.objects.count()
+
+        response = self.client.delete(self.detail_url)
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_204_NO_CONTENT
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count - 1
+        )
+
+        self.assertFalse(
+            Experience.objects.filter(
+                pk=self.experience.pk
+            ).exists()
+        )
+
+    # ==========================================
+    # INPUT VALIDATION
+    # ==========================================
+
+    def test_owner_cannot_create_experience_with_empty_title(self):
+        self.client.force_authenticate(user=self.owner)
+
+        initial_count = Experience.objects.count()
+
+        invalid_payload = {
+            "title": "",
+            "description": "Some description",
+            "category": "internship",
+            "thumbnail": "",
+            "is_ongoing": True
+        }
+
+        response = self.client.post(
+            self.list_url,
+            invalid_payload,
+            format="json"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_400_BAD_REQUEST
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count
+        )
+
+    def test_owner_cannot_create_experience_with_invalid_category(self):
+        self.client.force_authenticate(user=self.owner)
+
+        initial_count = Experience.objects.count()
+
+        invalid_payload = {
+            "title": "Invalid Category Experience",
+            "description": "Some description",
+            "category": "invalid-category",
+            "thumbnail": "",
+            "is_ongoing": True
+        }
+
+        response = self.client.post(
+            self.list_url,
+            invalid_payload,
+            format="json"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_400_BAD_REQUEST
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count
+        )
+
+    # ==========================================
+    # STAR
+    # ==========================================
+
+    def test_authenticated_user_can_star_experience(self):
+        self.client.force_authenticate(user=self.regular_user)
+
+        response = self.client.post(self.star_url)
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK
+        )
+
+        self.assertTrue(
+            self.experience.starred_by.filter(
+                pk=self.regular_user.pk
+            ).exists()
+        )
+
+    def test_authenticated_user_can_unstar_experience(self):
+        self.experience.starred_by.add(self.regular_user)
+
+        self.client.force_authenticate(user=self.regular_user)
+
+        response = self.client.post(self.star_url)
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK
+        )
+
+        self.assertFalse(
+            self.experience.starred_by.filter(
+                pk=self.regular_user.pk
+            ).exists()
+        )
+
+    def test_anonymous_user_cannot_star_experience(self):
+        initial_star_count = self.experience.starred_by.count()
+
+        response = self.client.post(self.star_url)
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+        self.assertEqual(
+            self.experience.starred_by.count(),
+            initial_star_count
+        )
+
+    def test_authenticated_post_requires_csrf_token(self):
+        csrf_client = APIClient(enforce_csrf_checks=True)
+
+        logged_in = csrf_client.login(
+            username="owner",
+            password="owner123"
+        )
+
+        self.assertTrue(logged_in)
+
+        initial_count = Experience.objects.count()
+
+        response = csrf_client.post(
+            self.list_url,
+            self.valid_payload,
+            format="json"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+        self.assertEqual(
+            Experience.objects.count(),
+            initial_count
+        )
